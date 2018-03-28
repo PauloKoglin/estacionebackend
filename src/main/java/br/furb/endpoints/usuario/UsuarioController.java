@@ -36,7 +36,13 @@ public class UsuarioController {
 
 	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET, value = "/{idUsuario}")
 	public ResponseEntity<UsuarioPojo> getusuario(@PathVariable("idUsuario") Long idUsuario) {
-		return new ResponseEntity<>(usuarioDao.find(idUsuario), HttpStatus.OK);
+		UsuarioPojo usuario = usuarioDao.find(idUsuario);
+		if (usuario.getLogin() == "") {
+			System.out.print("Usuário não encontrado.");
+			return new ResponseEntity<>(usuario, HttpStatus.NOT_FOUND);
+		}
+		else
+			return new ResponseEntity<>(usuario, HttpStatus.OK);
 	}
 
 	@RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE,
@@ -48,6 +54,12 @@ public class UsuarioController {
 	@RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE,
 			method = RequestMethod.POST)
 	public ResponseEntity<UsuarioPojo> cadastrausuario(@RequestBody UsuarioPojo usuario) {
-		return new ResponseEntity<>(usuarioDao.save(usuario, null), HttpStatus.OK);
+		System.out.print("Gravando usuário.");
+		UsuarioPojo usuarioPojo = usuarioDao.save(usuario, null);
+		if (usuarioPojo.equals(null)) {
+			System.out.print("Não foi gravado o usuário.");			
+			return new ResponseEntity<>(usuario, HttpStatus.NO_CONTENT);
+		} else
+			return new ResponseEntity<>(usuarioPojo, HttpStatus.OK);
 	}
 }
