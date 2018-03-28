@@ -24,17 +24,17 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @PropertySource({ "classpath:application.properties" }) // incluso
 public class PersistenceConfig {
 
-	/*
+	
 	@Bean
 	public LocalSessionFactoryBean sessionFactory() {
 		LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
 		sessionFactory.setDataSource(dataSource());
-		sessionFactory.setPackagesToScan(new String[] { "br.furb" });
-		sessionFactory.setHibernateProperties(additionalProperties());
+		sessionFactory.setPackagesToScan(new String[] { "br.furb.model" });
+		//sessionFactory.setHibernateProperties(additionalProperties());
 
 		return sessionFactory;
 	}
-*/
+
 	/*
 	@Bean
 	public DataSource dataSource() {
@@ -56,7 +56,7 @@ public class PersistenceConfig {
 	    public DataSource dataSource() {
 	        return DataSourceBuilder.create().build();
 	    }
-/*
+
 	@Bean
 	@Autowired
 	public HibernateTransactionManager transactionManager(SessionFactory sessionFactory) {
@@ -76,7 +76,7 @@ public class PersistenceConfig {
 	public HibernateTemplate getTemplate(SessionFactory sessionFactory){
 		return new HibernateTemplate(sessionFactory);
 	}
-
+/*
 	Properties additionalProperties() {
 		Properties properties = new Properties();
 		properties.setProperty("hibernate.connection.driver_class", "org.postgresql.Driver");
