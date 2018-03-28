@@ -16,7 +16,7 @@ class ResourceServer extends ResourceServerConfigurerAdapter {
         http.csrf().disable();
         http.httpBasic().disable();
 
-        http.authorizeRequests().antMatchers("/estacionamento/**").authenticated();
+        http.authorizeRequests().antMatchers("/login/**").authenticated();
 
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
