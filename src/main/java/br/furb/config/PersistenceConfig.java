@@ -32,10 +32,14 @@ public class PersistenceConfig {
 	@Bean
 	public DataSource dataSource() {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
-		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
+		/*dataSource.setDriverClassName("com.mysql.jdbc.Driver");
 		dataSource.setUrl("jdbc:mysql://localhost:3306/db_estacione");
 		dataSource.setUsername("estacione");
-		dataSource.setPassword("estacione");
+		dataSource.setPassword("estacione");*/
+		dataSource.setDriverClassName("org.postgresql.Driver");
+		dataSource.setUrl("postgres://evdfvokuzrdnjd:34befb62e53da474368c9619a957b98e7b7fba399640643bcce967798572bfdf@ec2-54-204-45-43.compute-1.amazonaws.com:5432/d45mai2skl0dn5");
+		dataSource.setUsername("evdfvokuzrdnjd");
+		dataSource.setPassword("34befb62e53da474368c9619a957b98e7b7fba399640643bcce967798572bfdf");
 		return dataSource;
 	}
 
@@ -61,7 +65,8 @@ public class PersistenceConfig {
 
 	Properties additionalProperties() {
 		Properties properties = new Properties();
-		properties.setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
+		properties.setProperty("hibernate.connection.driver_class", "org.postgresql.Driver");
+		//properties.setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
 //		properties.setProperty("hibernate.connection.url", "jdbc:mysql://localhost/admcenterweb");
 //		properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
 //		properties.setProperty("hibernate.connection.username", "root");
