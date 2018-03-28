@@ -6,8 +6,12 @@ import javax.sql.DataSource;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTemplate;
@@ -17,6 +21,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
+@PropertySource({ "classpath:application.properties" }) // incluso
 public class PersistenceConfig {
 
 	@Bean
@@ -29,19 +34,27 @@ public class PersistenceConfig {
 		return sessionFactory;
 	}
 
+	/*
 	@Bean
 	public DataSource dataSource() {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
-		/*dataSource.setDriverClassName("com.mysql.jdbc.Driver");
+		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
 		dataSource.setUrl("jdbc:mysql://localhost:3306/db_estacione");
 		dataSource.setUsername("estacione");
-		dataSource.setPassword("estacione");*/
+		dataSource.setPassword("estacione");
 		dataSource.setDriverClassName("org.postgresql.Driver");
-		dataSource.setUrl("postgres://evdfvokuzrdnjd:34befb62e53da474368c9619a957b98e7b7fba399640643bcce967798572bfdf@ec2-54-204-45-43.compute-1.amazonaws.com:5432/d45mai2skl0dn5");
+		dataSource.setUrl("jdbc:postgresql://evdfvokuzrdnjd:34befb62e53da474368c9619a957b98e7b7fba399640643bcce967798572bfdf@ec2-54-204-45-43.compute-1.amazonaws.com:5432/d45mai2skl0dn5");
 		dataSource.setUsername("evdfvokuzrdnjd");
 		dataSource.setPassword("34befb62e53da474368c9619a957b98e7b7fba399640643bcce967798572bfdf");
 		return dataSource;
 	}
+	*/
+	 @Bean
+	    @Primary
+	    @ConfigurationProperties(prefix = "spring.datasource")
+	    public DataSource dataSource() {
+	        return DataSourceBuilder.create().build();
+	    }
 
 	@Bean
 	@Autowired
