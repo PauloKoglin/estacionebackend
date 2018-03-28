@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @PropertySource({ "classpath:application.properties" }) // incluso
 public class PersistenceConfig {
 
+	/*
 	@Bean
 	public LocalSessionFactoryBean sessionFactory() {
 		LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
@@ -33,7 +34,7 @@ public class PersistenceConfig {
 
 		return sessionFactory;
 	}
-
+*/
 	/*
 	@Bean
 	public DataSource dataSource() {
@@ -55,7 +56,7 @@ public class PersistenceConfig {
 	    public DataSource dataSource() {
 	        return DataSourceBuilder.create().build();
 	    }
-
+/*
 	@Bean
 	@Autowired
 	public HibernateTransactionManager transactionManager(SessionFactory sessionFactory) {
@@ -88,5 +89,5 @@ public class PersistenceConfig {
 //		properties.setProperty("hibernate.format_sql", "true");
 		properties.setProperty("hibernate.hbm2ddl.auto", "update");
 		return properties;
-	}
+	}*/
 }
