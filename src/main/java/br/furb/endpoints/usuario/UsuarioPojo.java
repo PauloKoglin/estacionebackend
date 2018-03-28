@@ -5,6 +5,7 @@ import java.util.Date;
 public class UsuarioPojo {
 
 	private String nome;
+	private String login;
 	private String email;
 	private String senha;
 	private boolean TermosPoliticas;
@@ -24,6 +25,15 @@ public class UsuarioPojo {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+	
+	public String getLogin() {
+		return login;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
 
 	public String getEmail() {
 		return email;
