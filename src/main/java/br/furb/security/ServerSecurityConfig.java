@@ -36,6 +36,6 @@ public class ServerSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		// SecurityFilter filter = new SecurityFilter();
 		// http.addFilterBefore(filter, BasicAuthenticationFilter.class);
-		http.authorizeRequests().antMatchers("/estacionamento", "/historico", "/usuario").hasAnyAuthority("USER");
+		http.authorizeRequests().antMatchers("/estacionamento", "/historico").hasAnyAuthority("USER");
 	}
 }
