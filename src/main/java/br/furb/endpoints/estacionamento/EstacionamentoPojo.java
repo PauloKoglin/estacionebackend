@@ -9,8 +9,8 @@ public class EstacionamentoPojo {
 	private Long idEstacionamento;	
 	private UsuarioEntity usuario;
 	private String nome;
-	private Long longitude;
-	private Long latitude;
+	private double longitude;
+	private double latitude;
 	private String complementoLocalizacao;
 	private double preco;
 	private ArrayList<EstacionamentoHorariosPojo> horarios;
@@ -34,16 +34,16 @@ public class EstacionamentoPojo {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public Long getLongitude() {
+	public double getLongitude() {
 		return longitude;
 	}
-	public void setLongitude(Long longitude) {
+	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
-	public Long getLatitude() {
+	public double getLatitude() {
 		return latitude;
 	}
-	public void setLatitude(Long latitude) {
+	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 	}
 	public String getComplementoLocalizacao() {

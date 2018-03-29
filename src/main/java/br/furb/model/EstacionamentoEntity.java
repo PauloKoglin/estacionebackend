@@ -41,10 +41,10 @@ public class EstacionamentoEntity implements BaseEntity {
 	private String nome;
 	
 	@Column(name = "vl_longitude")
-	private Long longitude;
+	private double longitude;
 	
 	@Column(name = "vl_latitude")
-	private Long latitude;
+	private double latitude;
 	
 	@Column(name = "ds_localizacao", length = 1500)
 	private String complementoLocalizacao;
@@ -81,16 +81,16 @@ public class EstacionamentoEntity implements BaseEntity {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public Long getLongitude() {
+	public double getLongitude() {
 		return longitude;
 	}
-	public void setLongitude(Long longitude) {
+	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
-	public Long getLatitude() {
+	public double getLatitude() {
 		return latitude;
 	}
-	public void setLatitude(Long latitude) {
+	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 	}
 	public String getComplementoLocalizacao() {
