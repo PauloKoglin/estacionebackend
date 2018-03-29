@@ -41,7 +41,7 @@ public class EstacionamentoController {
 	@RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE,
 			method = RequestMethod.POST)
 	public ResponseEntity<EstacionamentoPojo> inserirEstacionamento(@RequestBody EstacionamentoPojo estacionamento) {
-		return new ResponseEntity<>(estacionamentoDao.save(estacionamento, null), HttpStatus.OK);
+		return new ResponseEntity<>(estacionamentoDao.save(estacionamento, null, estacionamento.getUsuario().getId()), HttpStatus.OK);
 	}
 }
 
