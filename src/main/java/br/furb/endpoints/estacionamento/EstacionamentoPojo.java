@@ -1,15 +1,13 @@
 package br.furb.endpoints.estacionamento;
 
 import java.util.ArrayList;
-
-import br.furb.endpoints.usuario.UsuarioPojo;
 import br.furb.model.UsuarioEntity;
 
 
 public class EstacionamentoPojo {
 	
 	private Long idEstacionamento;	
-	private UsuarioEntity usuarioProprietario;
+	private UsuarioEntity usuario;
 	private String nome;
 	private Long longitude;
 	private Long latitude;
@@ -24,11 +22,11 @@ public class EstacionamentoPojo {
 	public void setIdEstacionamento(Long idEstacionamento) {
 		this.idEstacionamento = idEstacionamento;
 	}
-	public UsuarioEntity getProprietario() {
-		return usuarioProprietario;
+	public UsuarioEntity getUsuario() {
+		return usuario;
 	}
-	public void setProprietario(UsuarioEntity proprietario) {
-		this.usuarioProprietario = proprietario;
+	public void setUsuario(UsuarioEntity usuario) {
+		this.usuario = usuario;
 	}
 	public String getNome() {
 		return nome;

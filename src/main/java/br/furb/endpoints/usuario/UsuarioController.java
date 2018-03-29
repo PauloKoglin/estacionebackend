@@ -51,7 +51,7 @@ public class UsuarioController {
 			usuarios = usuarioDao.findAll();
 			return new ResponseEntity<>(usuarios, HttpStatus.OK);
 		} catch (Exception e) {
-			System.out.print("Usuário não encontrado.");
+			System.out.print("Nenhum usuário foi encontrado.");
 			return new ResponseEntity<>(usuarios, HttpStatus.NOT_FOUND);
 		}			
 	}

@@ -36,17 +36,19 @@ public class EstacionamentoDao extends BaseDao<EstacionamentoEntity, Estacioname
 		entity.setLongitude(pojo.getLongitude());
 		entity.setComplementoLocalizacao(pojo.getComplementoLocalizacao());
 		entity.setPreco(pojo.getPreco());
+		entity.setUsuario(pojo.getUsuario());
 		
-		for (EstacionamentoHorariosPojo horarioPojo : pojo.getHorarios()) {
-			EstacionamentoHorariosEntity horarioEntity = new EstacionamentoHorariosEntity();
-			horarioEntity.setEstacionamento(horarioPojo.getEstacionamento());
-			horarioEntity.setIdHorario(horarioPojo.getIdHorario());
-			horarioEntity.setDiaSemana(horarioPojo.getDiaSemana());
-			horarioEntity.setHoraFim(horarioPojo.getHoraFim());
-			horarioEntity.setHoraInicio(horarioPojo.getHoraInicio());			
-			entity.getHorarios().add(horarioEntity);
-		}		
-		
+		if (pojo.getHorarios().size() > 0) {
+			for (EstacionamentoHorariosPojo horarioPojo : pojo.getHorarios()) {
+				EstacionamentoHorariosEntity horarioEntity = new EstacionamentoHorariosEntity();
+				horarioEntity.setEstacionamento(horarioPojo.getEstacionamento());
+				horarioEntity.setIdHorario(horarioPojo.getIdHorario());
+				horarioEntity.setDiaSemana(horarioPojo.getDiaSemana());
+				horarioEntity.setHoraFim(horarioPojo.getHoraFim());
+				horarioEntity.setHoraInicio(horarioPojo.getHoraInicio());			
+				entity.getHorarios().add(horarioEntity);
+			}		
+		}
 		Criteria criteria = hibernateTemplate.getSessionFactory().getCurrentSession()
 				.createCriteria(EstacionamentoEntity.class);
 		criteria.add(Restrictions.or(Restrictions.eq("login", SecurityContextHolder.getContext().getAuthentication().getName())));
@@ -64,7 +66,7 @@ public class EstacionamentoDao extends BaseDao<EstacionamentoEntity, Estacioname
 		pojo.setLatitude(entity.getLatitude());
 		pojo.setLongitude(entity.getLongitude());
 		pojo.setPreco(entity.getPreco());
-		pojo.setProprietario(entity.getUsuario());
+		pojo.setUsuario(entity.getUsuario());
 		
 		for (EstacionamentoHorariosEntity horarioEntity : entity.getHorarios()) {
 			EstacionamentoHorariosPojo horarioPojo = new EstacionamentoHorariosPojo();
