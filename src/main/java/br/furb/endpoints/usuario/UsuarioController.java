@@ -33,16 +33,17 @@ public class UsuarioController {
 
 	@Autowired @Lazy private UsuarioDao usuarioDao;
 
-
 	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET, value = "/{idUsuario}")
 	public ResponseEntity<UsuarioPojo> getusuario(@PathVariable("idUsuario") Long idUsuario) {
-		UsuarioPojo usuario = usuarioDao.find(idUsuario);
-		if (usuario.getLogin() == "") {
+		UsuarioPojo usuario = null;
+		try {
+			usuario = usuarioDao.find(idUsuario);
+			return new ResponseEntity<>(usuario, HttpStatus.OK);
+		} catch (Exception e) {
 			System.out.print("Usuário não encontrado.");
 			return new ResponseEntity<>(usuario, HttpStatus.NOT_FOUND);
 		}
-		else
-			return new ResponseEntity<>(usuario, HttpStatus.OK);
+			
 	}
 
 	@RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE,
