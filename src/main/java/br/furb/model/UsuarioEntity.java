@@ -38,6 +38,9 @@ public class UsuarioEntity implements BaseEntity {
 	@Column(name = "ds_email", length = 400)
 	private String email;
 
+	@Column(name = "tp_usuario", length = 1)
+	private String tipoUsuario;
+	
 	@Override
 	public Long getId() {
 		return id;
@@ -79,4 +82,13 @@ public class UsuarioEntity implements BaseEntity {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+	
+	public String getTipoUsuario() {
+		return tipoUsuario;
+	}
+
+	public void setTipoUsuario(String tipoUsuario) {
+		this.tipoUsuario = tipoUsuario;
+	}
+
 }
