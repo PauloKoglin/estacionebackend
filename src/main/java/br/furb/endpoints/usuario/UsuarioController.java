@@ -3,15 +3,14 @@
  */
 package br.furb.endpoints.usuario;
 
+
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,8 +41,19 @@ public class UsuarioController {
 		} catch (Exception e) {
 			System.out.print("Usuário não encontrado.");
 			return new ResponseEntity<>(usuario, HttpStatus.NOT_FOUND);
-		}
-			
+		}			
+	}
+	
+	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET, value = "/")
+	public ResponseEntity<List<UsuarioPojo>> getTodosUsuarios() {
+		List<UsuarioPojo> usuarios = null;
+		try {
+			usuarios = usuarioDao.findAll();
+			return new ResponseEntity<>(usuarios, HttpStatus.OK);
+		} catch (Exception e) {
+			System.out.print("Usuário não encontrado.");
+			return new ResponseEntity<>(usuarios, HttpStatus.NOT_FOUND);
+		}			
 	}
 
 	@RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE,

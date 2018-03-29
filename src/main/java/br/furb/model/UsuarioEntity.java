@@ -37,6 +37,9 @@ public class UsuarioEntity implements BaseEntity {
 	@NotNull
 	@Column(name = "ds_email", length = 400)
 	private String email;
+	
+	@Column(name = "fl_termosPoliticas")
+	private boolean termosPoliticas;
 
 	@Column(name = "tp_usuario", length = 1)
 	private String tipoUsuario;
@@ -83,6 +86,14 @@ public class UsuarioEntity implements BaseEntity {
 		this.nome = nome;
 	}
 	
+	public boolean getTermosPoliticas() {
+		return termosPoliticas;
+	}
+
+	public void setTermosPoliticas(boolean termosPoliticas) {
+		this.termosPoliticas = termosPoliticas;
+	}
+
 	public String getTipoUsuario() {
 		return tipoUsuario;
 	}

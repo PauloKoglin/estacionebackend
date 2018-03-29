@@ -9,6 +9,7 @@ public class UsuarioPojo {
 	private String email;
 	private String senha;
 	private boolean TermosPoliticas;
+	private String tipoUsuario;
 
 	public boolean isTermosPoliticas() {
 		return TermosPoliticas;
@@ -51,4 +52,13 @@ public class UsuarioPojo {
 		this.senha = senha;
 	}
 
+	public String getTipoUsuario() {
+		return tipoUsuario;
+	}
+
+	public void setTipoUsuario(String tipoUsuario) {
+		this.tipoUsuario = tipoUsuario;
+	}
+
+	
 }

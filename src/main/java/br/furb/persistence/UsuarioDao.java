@@ -25,6 +25,8 @@ public class UsuarioDao extends BaseDao<UsuarioEntity, UsuarioPojo> {
 		entity.setEmail(pojo.getEmail());
 		entity.setSenha(pojo.getSenha());
 		entity.setLogin(pojo.getLogin());
+		entity.setTermosPoliticas(pojo.isTermosPoliticas());
+		entity.setTipoUsuario(pojo.getTipoUsuario());
 		
 		/*Criteria criteria = hibernateTemplate.getSessionFactory().getCurrentSession()
 				.createCriteria(UsuarioEntity.class);
@@ -43,6 +45,8 @@ public class UsuarioDao extends BaseDao<UsuarioEntity, UsuarioPojo> {
 		pojo.setNome(entity.getNome());
 		pojo.setSenha(entity.getSenha());
 		pojo.setLogin(entity.getLogin());
+		pojo.setTermosPoliticas(entity.getTermosPoliticas());
+		pojo.setTipoUsuario(entity.getTipoUsuario());
 		
 		return pojo;
 	}
