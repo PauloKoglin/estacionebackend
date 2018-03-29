@@ -1,6 +1,7 @@
 package br.furb.endpoints.estacionamento;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
@@ -11,11 +12,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
 import br.furb.persistence.EstacionamentoDao;
 
 
 @RestController
-@RequestMapping("estacionamento")
+@RequestMapping("estacionamento/{idUsuario}")
 public class EstacionamentoController {
 
 	@Autowired @Lazy private EstacionamentoDao estacionamentoDao;
@@ -40,8 +42,8 @@ public class EstacionamentoController {
 
 	@RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE,
 			method = RequestMethod.POST)
-	public ResponseEntity<EstacionamentoPojo> inserirEstacionamento(@RequestBody EstacionamentoPojo estacionamento) {
-		return new ResponseEntity<>(estacionamentoDao.save(estacionamento, null, estacionamento.getUsuario().getId()), HttpStatus.OK);
+	public ResponseEntity<EstacionamentoPojo> inserirEstacionamento(@PathVariable("idUsuario") Long idUsuario, @RequestBody EstacionamentoPojo estacionamento) {
+		return new ResponseEntity<>(estacionamentoDao.save(estacionamento, null, idUsuario), HttpStatus.OK);
 	}
 }
 
