@@ -36,8 +36,9 @@ public class EstacionamentoDao extends BaseDao<EstacionamentoEntity, Estacioname
 		entity.setLongitude(pojo.getLongitude());
 		entity.setComplementoLocalizacao(pojo.getComplementoLocalizacao());
 		entity.setPreco(pojo.getPreco());
-		entity.setUsuario(pojo.getUsuario());
-		
+		//entity.setUsuario(pojo.getUsuario());
+		//entity.setHorarios(null);
+		/*
 		if (pojo.getHorarios().size() > 0) {
 			for (EstacionamentoHorariosPojo horarioPojo : pojo.getHorarios()) {
 				EstacionamentoHorariosEntity horarioEntity = new EstacionamentoHorariosEntity();
@@ -48,7 +49,7 @@ public class EstacionamentoDao extends BaseDao<EstacionamentoEntity, Estacioname
 				horarioEntity.setHoraInicio(horarioPojo.getHoraInicio());			
 				entity.getHorarios().add(horarioEntity);
 			}		
-		}
+		}*/
 		Criteria criteria = hibernateTemplate.getSessionFactory().getCurrentSession()
 				.createCriteria(EstacionamentoEntity.class);
 		criteria.add(Restrictions.or(Restrictions.eq("login", SecurityContextHolder.getContext().getAuthentication().getName())));
@@ -67,7 +68,7 @@ public class EstacionamentoDao extends BaseDao<EstacionamentoEntity, Estacioname
 		pojo.setLongitude(entity.getLongitude());
 		pojo.setPreco(entity.getPreco());
 		pojo.setUsuario(entity.getUsuario());
-		
+		/*
 		for (EstacionamentoHorariosEntity horarioEntity : entity.getHorarios()) {
 			EstacionamentoHorariosPojo horarioPojo = new EstacionamentoHorariosPojo();
 			horarioPojo.setEstacionamento(horarioEntity.getEstacionamento());
@@ -76,7 +77,7 @@ public class EstacionamentoDao extends BaseDao<EstacionamentoEntity, Estacioname
 			horarioPojo.setHoraFim(horarioEntity.getHoraFim());
 			horarioPojo.setHoraInicio(horarioEntity.getHoraInicio());			
 			pojo.getHorarios().add(horarioPojo);
-		}
+		}*/
 		
 		return pojo;
 	}

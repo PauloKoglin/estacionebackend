@@ -17,7 +17,7 @@ import br.furb.persistence.EstacionamentoDao;
 
 
 @RestController
-@RequestMapping("estacionamento/{idUsuario}")
+@RequestMapping("estacionamento") ///{idUsuario}
 public class EstacionamentoController {
 
 	@Autowired @Lazy private EstacionamentoDao estacionamentoDao;
@@ -41,9 +41,9 @@ public class EstacionamentoController {
 	}
 
 	@RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE,
-			method = RequestMethod.POST)
-	public ResponseEntity<EstacionamentoPojo> inserirEstacionamento(@PathVariable("idUsuario") Long idUsuario, @RequestBody EstacionamentoPojo estacionamento) {
-		return new ResponseEntity<>(estacionamentoDao.save(estacionamento, null, idUsuario), HttpStatus.OK);
+			method = RequestMethod.POST) //@PathVariable("idUsuario") Long idUsuario
+	public ResponseEntity<EstacionamentoPojo> inserirEstacionamento(@RequestBody EstacionamentoPojo estacionamento) {
+		return new ResponseEntity<>(estacionamentoDao.save(estacionamento, null), HttpStatus.OK);
 	}
 }
 
