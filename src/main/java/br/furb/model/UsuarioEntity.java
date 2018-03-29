@@ -38,8 +38,8 @@ public class UsuarioEntity implements BaseEntity {
 	@Column(name = "ds_email", length = 400)
 	private String email;
 	
-	@Column(name = "fl_termosPoliticas")
-	private boolean termosPoliticas;
+	@Column(name = "fl_termos")
+	private boolean termosPoliticas = false;
 
 	@Column(name = "tp_usuario", length = 1)
 	private String tipoUsuario;
