@@ -51,7 +51,7 @@ public class EstacionamentoDao extends BaseDao<EstacionamentoEntity, Estacioname
 			}		
 		}*/
 		Criteria criteria = hibernateTemplate.getSessionFactory().getCurrentSession()
-				.createCriteria(EstacionamentoEntity.class);
+				.createCriteria(UsuarioEntity.class);
 		criteria.add(Restrictions.or(Restrictions.eq("login", SecurityContextHolder.getContext().getAuthentication().getName())));
 		Object uniqueResult = criteria.uniqueResult();
 		if (uniqueResult != null) {
