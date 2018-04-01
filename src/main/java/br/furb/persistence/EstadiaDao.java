@@ -28,21 +28,27 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 
 	@Override
 	protected EstadiaEntity pojoToEntity(EstadiaPojo pojo, EstadiaEntity entity) {
-		entity.setId(pojo.getIdEstadia());
+		entity.setIdEstadia(pojo.getIdEstadia());
+		System.out.println("pojoToEntity Entrou 1");
 		entity.setEstacionamento(hibernateTemplate.load(EstacionamentoEntity.class, pojo.getIdEstacionamento()));
+		System.out.println("pojoToEntity Entrou 2");
 		entity.setUsuario(hibernateTemplate.load(UsuarioEntity.class, pojo.getIdUsuario()));
+		System.out.println("pojoToEntity Entrou 3");
 		entity.setPreco(pojo.getPreco());
 		try {
 			if (!pojo.getDataEntrada().isEmpty())
 				entity.setDataEntrada(sdf.parse(pojo.getDataEntrada()));
 			
+			System.out.println("pojoToEntity Entrou 4");
+			
 			if (!pojo.getDataSaida().isEmpty())
 				entity.setDataSaida(sdf.parse(pojo.getDataSaida()));
+			
+			System.out.println("pojoToEntity Entrou 5");
 		} catch (ParseException e) {
 			System.out.println(e.getMessage()); 
 			e.printStackTrace();
-		}
-		
+		}	
 		
 		return entity;
 	}

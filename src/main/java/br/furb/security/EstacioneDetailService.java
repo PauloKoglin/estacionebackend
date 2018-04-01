@@ -36,7 +36,7 @@ public class EstacioneDetailService extends InMemoryUserDetailsManager implement
 	@Transactional(readOnly = true)
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		System.out.print("Buscando usuário na base.");
+		System.out.print("Buscando usuário na base AQUI.");
 		Criteria criteria = hibernateTemplate.getSessionFactory().getCurrentSession()
 				.createCriteria(UsuarioEntity.class);
 		criteria.add(Restrictions.or(Restrictions.eq("login", username), Restrictions.eq("email", username)));

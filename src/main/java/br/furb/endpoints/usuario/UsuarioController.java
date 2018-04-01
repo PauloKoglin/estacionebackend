@@ -65,7 +65,7 @@ public class UsuarioController {
 	@RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE,
 			method = RequestMethod.POST)
 	public ResponseEntity<UsuarioPojo> cadastrausuario(@RequestBody UsuarioPojo usuario) {
-		System.out.print("Gravando usuário.");
+		System.out.print("Gravando usuário via endpoint.");
 		UsuarioPojo usuarioPojo = usuarioDao.save(usuario, null);
 		if (usuarioPojo.equals(null)) {
 			System.out.print("Não foi gravado o usuário.");			
