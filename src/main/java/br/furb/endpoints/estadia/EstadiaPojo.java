@@ -14,8 +14,8 @@ public class EstadiaPojo {
 	private Long idEstadia;
 	private Long idUsuario;
 	private Long idEstacionamento;
-	private Date dataEntrada;
-	private Date dataSaida;
+	private String dataEntrada;
+	private String dataSaida;
 	private double preco;
 	
 	
@@ -37,16 +37,16 @@ public class EstadiaPojo {
 	public void setIdEstacionamento(Long idEstacionamento) {
 		this.idEstacionamento = idEstacionamento;
 	}
-	public Date getDataEntrada() {
+	public String getDataEntrada() {
 		return dataEntrada;
 	}
-	public void setDataEntrada(Date dataEntrada) {
+	public void setDataEntrada(String dataEntrada) {
 		this.dataEntrada = dataEntrada;
 	}
-	public Date getDataSaida() {
+	public String getDataSaida() {
 		return dataSaida;
 	}
-	public void setDataSaida(Date dataSaida) {
+	public void setDataSaida(String dataSaida) {
 		this.dataSaida = dataSaida;
 	}
 	public double getPreco() {

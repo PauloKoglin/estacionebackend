@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
@@ -13,6 +14,7 @@ import javax.validation.constraints.NotNull;
         @UniqueConstraint(columnNames = "ds_login"),
         @UniqueConstraint(columnNames = "ds_email")
 })
+@SequenceGenerator(name="usuario_id")
 public class UsuarioEntity implements BaseEntity {
 
 	public static final String TABLE_NAME = "usuario";

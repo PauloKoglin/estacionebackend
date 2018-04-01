@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 
@@ -23,6 +24,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = EstacionamentoHorariosEntity.TABLE_NAME)
+@SequenceGenerator(name="estacionamento_horario_id")
 public class EstacionamentoHorariosEntity implements BaseEntity {
 	
 	public static final String TABLE_NAME = "estacionamento_horario";	

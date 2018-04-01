@@ -1,15 +1,13 @@
 package br.furb.persistence;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 import org.hibernate.Criteria;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.hql.internal.ast.tree.IsNullLogicOperatorNode;
-import org.springframework.orm.hibernate5.HibernateTemplate;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import br.furb.endpoints.estadia.EstadiaPojo;
 import br.furb.model.EstacionamentoEntity;
@@ -19,6 +17,8 @@ import br.furb.model.UsuarioEntity;
 
 @Repository
 public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
+	
+	private static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
 
 	@Override
 	public Class<EstadiaEntity> getEntityClass() {
@@ -30,19 +30,24 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 		entity.setId(pojo.getIdEstadia());
 		entity.setEstacionamento(hibernateTemplate.load(EstacionamentoEntity.class, pojo.getIdEstacionamento()));
 		entity.setUsuario(hibernateTemplate.load(UsuarioEntity.class, pojo.getIdUsuario()));
-		entity.setDataEntrada(pojo.getDataEntrada());
-		entity.setDataSaida(pojo.getDataSaida());
+		try {
+			entity.setDataEntrada(sdf.parse(pojo.getDataEntrada()));
+			entity.setDataSaida(sdf.parse(pojo.getDataSaida()));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
 		entity.setPreco(pojo.getPreco());
 		return entity;
 	}
 
 	@Override
 	protected EstadiaPojo entityToPojo(EstadiaEntity entity, EstadiaPojo pojo) {
-		pojo.setIdEstadia(entity.getId());
+		pojo.setIdEstadia(entity.getIdEstadia());
 		pojo.setIdEstacionamento(entity.getEstacionamento().getId());
 		pojo.setIdUsuario(entity.getUsuario().getId());
-		pojo.setDataEntrada(entity.getDataEntrada());
-		pojo.setDataSaida(entity.getDataSaida());
+		pojo.setDataEntrada(sdf.format(entity.getDataEntrada()));
+		pojo.setDataSaida(sdf.format(entity.getDataSaida()));
 		pojo.setPreco(entity.getPreco());
 		return pojo;
 	}
@@ -90,8 +95,7 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 	
 	public EstadiaPojo findAbertaUsuarioId(Long idEstacionamento) {				
 		return findAll(crit -> {
-			crit.createAlias("usuario", "usu");
-			crit.add(Restrictions.eq("usu.id_usuario", idEstacionamento));
+			crit.add(Restrictions.eq("id_usuario", idEstacionamento));
 			crit.add(Restrictions.isNull("dt_saida"));
 			crit.add(Restrictions.isNotEmpty("dt_entrada"));
 		}).get(0);
