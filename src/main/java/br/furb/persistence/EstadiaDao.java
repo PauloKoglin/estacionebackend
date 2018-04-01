@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Locale;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -73,9 +74,13 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 	
 	@SuppressWarnings("unchecked")
 	public List<EstadiaPojo> findAllByEstacionamentoId(Long idEstacionamento) {
-		Criteria criteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(EstadiaEntity.class);
+		System.out.println("Realizando consulta pelo ID do estacionamento.");
+		//Criteria criteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(EstadiaEntity.class);		
+		DetachedCriteria criteria = DetachedCriteria.forClass(EstadiaEntity.class);  
 		criteria.add(Restrictions.eq("id_estacionamento", idEstacionamento));
-		List<EstadiaPojo> list = criteria.list();
+		
+		List<EstadiaPojo> list = (List<EstadiaPojo>) hibernateTemplate.findByCriteria(criteria);
+		
 		if (!list.isEmpty()) {
 			return list;
 		} else

@@ -3,9 +3,6 @@
  */
 package br.furb.endpoints.estadia;
 
-import java.util.Date;
-
-
 /**
  * @author PauloArnoldo
  *

@@ -10,6 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -25,21 +26,21 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = EstadiaEntity.TABLE_NAME)
-@SequenceGenerator(name="estadia_id")
+@SequenceGenerator(name="estadia_sequence", sequenceName="estadia_id", initialValue=1, allocationSize=1)
 public class EstadiaEntity implements BaseEntity {
 	
 	public static final String TABLE_NAME = "estadia";
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="estadia_sequence")	
 	@Column(name = "id_estadia")	
 	private Long idEstadia;
 	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_usuario")
 	private UsuarioEntity usuario;
 	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_estacionamento")
 	private EstacionamentoEntity estacionamento;
 	
