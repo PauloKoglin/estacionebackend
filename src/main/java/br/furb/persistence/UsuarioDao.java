@@ -21,6 +21,7 @@ public class UsuarioDao extends BaseDao<UsuarioEntity, UsuarioPojo> {
 
 	@Override
 	protected UsuarioEntity pojoToEntity(UsuarioPojo pojo, UsuarioEntity entity) {
+		entity.setId(pojo.getIdUsuario());
 		entity.setNome(pojo.getNome());
 		entity.setEmail(pojo.getEmail());
 		entity.setSenha(pojo.getSenha());
@@ -41,6 +42,7 @@ public class UsuarioDao extends BaseDao<UsuarioEntity, UsuarioPojo> {
 
 	@Override
 	protected UsuarioPojo entityToPojo(UsuarioEntity entity, UsuarioPojo pojo) {
+		pojo.setIdUsuario(entity.getId());
 		pojo.setEmail(entity.getEmail());
 		pojo.setNome(entity.getNome());
 		pojo.setSenha(entity.getSenha());

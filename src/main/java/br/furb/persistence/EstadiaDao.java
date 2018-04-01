@@ -31,14 +31,19 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 		entity.setId(pojo.getIdEstadia());
 		entity.setEstacionamento(hibernateTemplate.load(EstacionamentoEntity.class, pojo.getIdEstacionamento()));
 		entity.setUsuario(hibernateTemplate.load(UsuarioEntity.class, pojo.getIdUsuario()));
+		entity.setPreco(pojo.getPreco());
 		try {
-			entity.setDataEntrada(sdf.parse(pojo.getDataEntrada()));
-			entity.setDataSaida(sdf.parse(pojo.getDataSaida()));
+			if (!pojo.getDataEntrada().isEmpty())
+				entity.setDataEntrada(sdf.parse(pojo.getDataEntrada()));
+			
+			if (!pojo.getDataSaida().isEmpty())
+				entity.setDataSaida(sdf.parse(pojo.getDataSaida()));
 		} catch (ParseException e) {
+			System.out.println(e.getMessage()); 
 			e.printStackTrace();
 		}
 		
-		entity.setPreco(pojo.getPreco());
+		
 		return entity;
 	}
 

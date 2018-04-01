@@ -1,15 +1,24 @@
 package br.furb.endpoints.usuario;
 
-import java.util.Date;
-
 public class UsuarioPojo {
 
+	private Long idUsuario;
 	private String nome;
 	private String login;
 	private String email;
 	private String senha;
 	private boolean TermosPoliticas;
 	private String tipoUsuario;
+
+	
+	
+	public Long getIdUsuario() {
+		return idUsuario;
+	}
+
+	public void setIdUsuario(Long idUsuario) {
+		this.idUsuario = idUsuario;
+	}
 
 	public boolean isTermosPoliticas() {
 		return TermosPoliticas;
