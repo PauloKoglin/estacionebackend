@@ -19,6 +19,7 @@ public abstract class BaseDao<T extends BaseEntity, E> {
 
 	@Transactional(rollbackFor = Throwable.class)
 	public E save(E pojo, Long id, Object...adicionais) {
+		// Alteração
 		if (id != null) {
 			T pojoToEntity = pojoToEntity(pojo, hibernateTemplate.load(getEntityClass(), id));
 			T savedEntity = hibernateTemplate.merge(pojoToEntity);
@@ -26,7 +27,7 @@ public abstract class BaseDao<T extends BaseEntity, E> {
 			hibernateTemplate.getSessionFactory().getCurrentSession().flush();
 			entityToPojo(savedEntity, newPojo);
 			return newPojo;
-		} else {
+		} else { // Inclusão
 			T pojoToEntity = pojoToEntity(pojo, newEntity(adicionais));
 			T savedEntity = hibernateTemplate.merge(pojoToEntity);
 			E newPojo = newPojo(adicionais);
