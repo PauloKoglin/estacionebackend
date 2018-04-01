@@ -69,7 +69,7 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 	@SuppressWarnings("unchecked")
 	public List<EstadiaPojo> findAllByEstacionamentoId(Long idEstacionamento) {
 		Criteria criteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(EstadiaEntity.class);
-		criteria.add(Restrictions.eq("est.id_Estacionamento", idEstacionamento));
+		criteria.add(Restrictions.eq("id_estacionamento", idEstacionamento));
 		List<EstadiaPojo> list = criteria.list();
 		if (!list.isEmpty()) {
 			return list;
