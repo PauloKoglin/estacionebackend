@@ -57,8 +57,7 @@ public abstract class BaseDao<T extends BaseEntity, E> {
 
 	@Transactional(readOnly = true)
 	public List<E> findAll(Consumer<Criteria> restrictions) {
-		Criteria createCriteria = hibernateTemplate.getSessionFactory().getCurrentSession()
-				.createCriteria(getEntityClass());
+		Criteria createCriteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(getEntityClass());
 		restrictions.accept(createCriteria);
 		List<T> list = createCriteria.list();
 		return list.parallelStream().map(t -> {

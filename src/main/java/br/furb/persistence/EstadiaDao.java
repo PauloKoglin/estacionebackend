@@ -7,6 +7,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.hql.internal.ast.tree.IsNullLogicOperatorNode;
 import org.springframework.orm.hibernate5.HibernateTemplate;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -65,11 +66,20 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 		return new EstadiaPojo();
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<EstadiaPojo> findAllByEstacionamentoId(Long idEstacionamento) {
-		return findAll(crit -> {
+		Criteria criteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(EstadiaEntity.class);
+		criteria.add(Restrictions.eq("est.id_Estacionamento", idEstacionamento));
+		List<EstadiaPojo> list = criteria.list();
+		if (!list.isEmpty()) {
+			return list;
+		} else
+			return null;
+		
+		/*return findAll(crit -> {
 			crit.createAlias("estacionamento", "est");
 			crit.add(Restrictions.eq("est.id_Estacionamento", idEstacionamento));
-		});
+		});*/
 	}
 
 	public List<EstadiaPojo> findAllByUsuarioId(Long idUsuario) {
