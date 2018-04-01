@@ -3,6 +3,8 @@
  */
 package br.furb.model;
 
+import java.util.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -41,11 +43,11 @@ public class EstadiaEntity implements BaseEntity {
 	
 	@Column(name = "dt_entrada")
 	@Temporal(TemporalType.TIMESTAMP)
-	private String dataEntrada;
+	private Date dataEntrada;
 	
 	@Column(name = "dt_saida")
 	@Temporal(TemporalType.TIMESTAMP)
-	private String dataSaida;
+	private Date dataSaida;
 	
 	@Column(name="vl_preco", length=10, precision=2, nullable=false)
 	private double preco;
@@ -84,19 +86,19 @@ public class EstadiaEntity implements BaseEntity {
 		this.estacionamento = estacionamento;
 	}
 
-	public String getDataEntrada() {
+	public Date getDataEntrada() {
 		return dataEntrada;
 	}
 
-	public void setDataEntrada(String dataEntrada) {
+	public void setDataEntrada(Date dataEntrada) {
 		this.dataEntrada = dataEntrada;
 	}
 
-	public String getDataSaida() {
+	public Date getDataSaida() {
 		return dataSaida;
 	}
 
-	public void setDataSaida(String dataSaida) {
+	public void setDataSaida(Date dataSaida) {
 		this.dataSaida = dataSaida;
 	}
 
