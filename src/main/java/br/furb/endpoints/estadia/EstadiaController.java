@@ -20,8 +20,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.furb.endpoints.estadia.EstadiaPojo;
-import br.furb.model.EstadiaEntity;
-import br.furb.model.NecessidadeEntity;
 import br.furb.persistence.EstadiaDao;
 
 /**

@@ -72,10 +72,9 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 		});
 	}
 
-	public List<EstadiaPojo> findAllByUsuarioId(Long idEstacionamento) {
+	public List<EstadiaPojo> findAllByUsuarioId(Long idUsuario) {
 		return findAll(crit -> {
-			crit.createAlias("usuario", "usu");
-			crit.add(Restrictions.eq("usu.id_usuario", idEstacionamento));
+			crit.add(Restrictions.eq("id_usuario", idUsuario));
 		});
 	}
 	
