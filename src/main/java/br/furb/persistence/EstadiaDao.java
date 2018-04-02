@@ -33,7 +33,16 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 		System.out.println("pojoToEntity Entrou 1");
 		entity.setEstacionamento(hibernateTemplate.load(EstacionamentoEntity.class, pojo.getIdEstacionamento()));
 		System.out.println("pojoToEntity Entrou 2");
-		entity.setUsuario(hibernateTemplate.load(UsuarioEntity.class, pojo.getIdUsuario()));
+		
+		UsuarioEntity usuario = null; 
+		Criteria usuarioCriteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(UsuarioEntity.class);
+		usuarioCriteria.add(Restrictions.or(Restrictions.eq("login", SecurityContextHolder.getContext().getAuthentication().getName())));
+		Object uniqueResult = usuarioCriteria.uniqueResult();
+		if (uniqueResult != null) {
+			usuario = (UsuarioEntity)uniqueResult;
+		}
+		entity.setUsuario(usuario);
+		
 		System.out.println("pojoToEntity Entrou 3");
 		entity.setPreco(pojo.getPreco());
 		try {
@@ -80,14 +89,14 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 	@Override
 	protected EstadiaEntity newEntity(Object...adicionais) {
 		EstadiaEntity estadiaEntity = new EstadiaEntity();
-		if (adicionais != null && adicionais.length > 0) {
+		/*if (adicionais != null && adicionais.length > 0) {
 			EstacionamentoEntity estacionamentoEntity = hibernateTemplate.load(EstacionamentoEntity.class, (Long)adicionais[0]);
 			estadiaEntity.setEstacionamento(estacionamentoEntity);			
-		}
-		if (adicionais != null && adicionais.length > 1) {
+		}*/
+		/*if (adicionais != null && adicionais.length > 1) {
 			UsuarioEntity usuarioEntity = hibernateTemplate.load(UsuarioEntity.class, (Long)adicionais[1]);
 			estadiaEntity.setUsuario(usuarioEntity);			
-		}
+		}*/
 		return estadiaEntity;
 	}
 
