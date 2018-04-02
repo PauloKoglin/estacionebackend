@@ -55,9 +55,9 @@ public class EstacionamentoEntity implements BaseEntity {
 	@Column(name = "vl_preco")
 	private double preco;
 	
-	@OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, targetEntity = EstacionamentoHorariosEntity.class, mappedBy = "estacionamento")
+	/*@OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, targetEntity = EstacionamentoHorariosEntity.class, mappedBy = "estacionamento")
 	private List<EstacionamentoHorariosEntity> horarios = new ArrayList<>();
-		
+	*/	
 	@Override
 	public Long getId() {
 		return this.idEstacionamento;
@@ -108,11 +108,12 @@ public class EstacionamentoEntity implements BaseEntity {
 	public void setPreco(double preco) {
 		this.preco = preco;
 	}
+	/*
 	public List<EstacionamentoHorariosEntity> getHorarios() {
 		return horarios;
 	}
 	public void setHorarios(List<EstacionamentoHorariosEntity> horarios) {
 		this.horarios = horarios;
 	}
-	
+	*/
 }

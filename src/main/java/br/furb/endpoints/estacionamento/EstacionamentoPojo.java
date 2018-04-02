@@ -13,7 +13,7 @@ public class EstacionamentoPojo {
 	private double latitude;
 	private String complementoLocalizacao;
 	private double preco;
-	private ArrayList<EstacionamentoHorariosPojo> horarios;
+	//private ArrayList<EstacionamentoHorariosPojo> horarios;
 	
 	
 	public Long getIdEstacionamento() {
@@ -58,12 +58,14 @@ public class EstacionamentoPojo {
 	public void setPreco(double preco) {
 		this.preco = preco;
 	}
+	/*
 	public ArrayList<EstacionamentoHorariosPojo> getHorarios() {
 		return horarios;
 	}
 	public void setHorarios(ArrayList<EstacionamentoHorariosPojo> horarios) {
 		this.horarios = horarios;
 	}
+	*/
 		
 	
 	
