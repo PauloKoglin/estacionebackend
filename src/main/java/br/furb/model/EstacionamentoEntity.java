@@ -56,7 +56,6 @@ public class EstacionamentoEntity implements BaseEntity {
 	private double preco;
 	
 	@OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, targetEntity = EstacionamentoHorariosEntity.class, mappedBy = "estacionamento")
-	@JoinColumn(name = "estacionamento_id")
 	private List<EstacionamentoHorariosEntity> horarios = new ArrayList<>();
 		
 	@Override
