@@ -171,7 +171,7 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 		criteria.createAlias("usuario", "usu");
 		criteria.add(Restrictions.eq("usu.id", usuario.getId()));
 		criteria.add(Restrictions.isNull("dataSaida"));
-		criteria.add(Restrictions.isNotEmpty("dataEntrada"));		
+		criteria.add(Restrictions.isNotNull("dataEntrada"));		
 		List<EstadiaPojo> list = (List<EstadiaPojo>) hibernateTemplate.findByCriteria(criteria);
 		
 		if (!list.isEmpty()) {
