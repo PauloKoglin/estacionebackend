@@ -45,9 +45,9 @@ public class EstadiaController {
 		return new ResponseEntity<>(estadiaDao.findAllByEstacionamentoId(idEstacionamento), HttpStatus.OK);
 	}
 	
-	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET, value = "/usuario/{idUsuario}")
-	public ResponseEntity<List<EstadiaPojo>> getEstadiasUsuario(@PathVariable("idUsuario") Long idUsuario) {				
-		return new ResponseEntity<>(estadiaDao.findAllByUsuarioId(idUsuario), HttpStatus.OK);
+	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET, value = "/usuario")
+	public ResponseEntity<List<EstadiaPojo>> getEstadiasUsuario() {				
+		return new ResponseEntity<>(estadiaDao.findAllUsuario(), HttpStatus.OK);
 	}
 	
 	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET, value = "/estadiaAberta")

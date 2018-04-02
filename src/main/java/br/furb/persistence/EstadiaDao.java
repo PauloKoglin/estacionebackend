@@ -129,13 +129,30 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<EstadiaPojo> findAllByUsuarioId(Long idUsuario) {
-		System.out.println("Realizando consulta pelo ID do usuário.");		
+	public List<EstadiaPojo> findAllUsuario() {
+		System.out.println("Realizando consulta de todas as estadias do usuário.");
+		
+		UsuarioEntity usuario = null; 
+		DetachedCriteria criteriaUsuario = DetachedCriteria.forClass(UsuarioEntity.class);  
+		criteriaUsuario.add(Restrictions.eq("login", SecurityContextHolder.getContext().getAuthentication().getName()));
+		List<UsuarioEntity> usuarioList = (List<UsuarioEntity>) hibernateTemplate.findByCriteria(criteriaUsuario);
+		
+		if (!usuarioList.isEmpty()) {
+			usuario = usuarioList.get(0);
+			System.out.println("Encontrou usuário. " + usuario.toString());
+		} 	
+		
+		/*System.out.println("Realizando consulta pelo ID do usuário.");		
 		DetachedCriteria criteria = DetachedCriteria.forClass(EstadiaEntity.class);  
 		criteria.createAlias("usuario", "usu");
-		criteria.add(Restrictions.eq("usu.idUsuario", idUsuario));
+		criteria.add(Restrictions.eq("usu.id", usuario.getId()));
 				
-		List<EstadiaPojo> list = (List<EstadiaPojo>) hibernateTemplate.findByCriteria(criteria);
+		List<EstadiaPojo> list = (List<EstadiaPojo>) hibernateTemplate.findByCriteria(criteria);*/
+		DetachedCriteria criteria = DetachedCriteria.forClass(EstadiaEntity.class);  
+		criteria.createAlias("usuario", "usu");
+		criteria.add(Restrictions.eq("usu.id", usuario.getId()));		
+		//List<EstadiaPojo> list = (List<EstadiaPojo>) hibernateTemplate.findByCriteria(criteria);
+		List<EstadiaPojo> list = findAll(criteria);
 		
 		return list;
 	}
@@ -152,7 +169,7 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 		if (!usuarioList.isEmpty()) {
 			usuario = usuarioList.get(0);
 			System.out.println("Encontrou usuário. " + usuario.toString());
-		} 		
+		} 	
 		
 		/*Session session = hibernateTemplate.getSessionFactory().getCurrentSession();
 		if (!session.isConnected())
