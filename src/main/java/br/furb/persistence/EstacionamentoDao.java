@@ -37,6 +37,7 @@ public class EstacionamentoDao extends BaseDao<EstacionamentoEntity, Estacioname
 		entity.setLongitude(pojo.getLongitude());
 		entity.setComplementoLocalizacao(pojo.getComplementoLocalizacao());
 		entity.setPreco(pojo.getPreco());
+		entity.setHorarios(null);
 		//entity.setUsuario(pojo.getUsuario());
 		//entity.setHorarios(null);
 		/*
@@ -70,6 +71,7 @@ public class EstacionamentoDao extends BaseDao<EstacionamentoEntity, Estacioname
 		pojo.setLongitude(entity.getLongitude());
 		pojo.setPreco(entity.getPreco());
 		pojo.setUsuario(entity.getUsuario());
+		pojo.setHorarios(null);
 		/*
 		for (EstacionamentoHorariosEntity horarioEntity : entity.getHorarios()) {
 			EstacionamentoHorariosPojo horarioPojo = new EstacionamentoHorariosPojo();

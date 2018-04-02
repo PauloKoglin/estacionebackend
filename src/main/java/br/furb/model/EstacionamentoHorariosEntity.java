@@ -30,7 +30,7 @@ public class EstacionamentoHorariosEntity implements BaseEntity {
 	public static final String TABLE_NAME = "estacionamento_horario";	
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, targetEntity = EstacionamentoEntity.class)
-	@JoinColumn(name="id_estacionamento", nullable=true)
+	@JoinColumn(name="estacionamento_id", nullable=true)	
 	private EstacionamentoEntity estacionamento;	
 	
 	@Id
