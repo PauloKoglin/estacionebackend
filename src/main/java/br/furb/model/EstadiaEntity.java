@@ -36,11 +36,11 @@ public class EstadiaEntity implements BaseEntity {
 	@Column(name = "id_estadia")	
 	private Long idEstadia;
 	
-	@ManyToOne(targetEntity = UsuarioEntity.class, cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+	@ManyToOne(targetEntity = UsuarioEntity.class, cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_usuario")
 	private UsuarioEntity usuario;
 	
-	@ManyToOne(targetEntity = EstacionamentoEntity.class, cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+	@ManyToOne(targetEntity = EstacionamentoEntity.class, cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_estacionamento")
 	private EstacionamentoEntity estacionamento;
 	
