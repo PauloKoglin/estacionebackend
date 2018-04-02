@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.furb.endpoints.estadia.EstadiaPojo;
+
+
 import br.furb.persistence.EstadiaDao;
 
 /**
@@ -48,9 +50,9 @@ public class EstadiaController {
 		return new ResponseEntity<>(estadiaDao.findAllByUsuarioId(idUsuario), HttpStatus.OK);
 	}
 	
-	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET, value = "/estadiaAberta/{idUsuario}")
-	public ResponseEntity<EstadiaPojo> getEstadiaAbertaUsuario(@PathVariable("idUsuario") Long idUsuario) {				
-		return new ResponseEntity<>(estadiaDao.findAbertaUsuarioId(idUsuario), HttpStatus.OK);
+	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET, value = "/estadiaAberta")
+	public ResponseEntity<EstadiaPojo> getEstadiaAbertaUsuario() {				
+		return new ResponseEntity<>(estadiaDao.findAbertaUsuario(), HttpStatus.OK);
 	}
 
 	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET, value = "/{idEstadia}")

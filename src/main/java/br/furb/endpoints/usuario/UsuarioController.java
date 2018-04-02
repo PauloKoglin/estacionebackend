@@ -55,6 +55,20 @@ public class UsuarioController {
 			return new ResponseEntity<>(usuarios, HttpStatus.NOT_FOUND);
 		}			
 	}
+	/*
+	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET, value = "/login/{login}")
+	public ResponseEntity<List<UsuarioPojo>> getUsuarioByLogin() {
+		List<UsuarioPojo> usuarios = null;
+		try {
+			usuarios = usuarioDao.findAll();
+			return new ResponseEntity<>(usuarios, HttpStatus.OK);
+		} catch (Exception e) {
+			System.out.print("Nenhum usuário foi encontrado.");
+			return new ResponseEntity<>(usuarios, HttpStatus.NOT_FOUND);
+		}			
+	}
+	*/
+	
 
 	@RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE,
 			method = RequestMethod.POST, value = {"/{idUsuario}"})

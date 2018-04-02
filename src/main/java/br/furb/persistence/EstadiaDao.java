@@ -8,6 +8,7 @@ import java.util.Locale;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
 import br.furb.endpoints.estadia.EstadiaPojo;
@@ -131,11 +132,20 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public EstadiaPojo findAbertaUsuarioId(Long idUsuario) {				
-		System.out.println("Realizando consulta de estadia aberta.");		
+	public EstadiaPojo findAbertaUsuario() {				
+		System.out.println("Realizando consulta de estadia aberta.");
+		
+		UsuarioEntity usuario = null; 
+		Criteria usuarioCriteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(UsuarioEntity.class);
+		usuarioCriteria.add(Restrictions.or(Restrictions.eq("login", SecurityContextHolder.getContext().getAuthentication().getName())));
+		Object uniqueResult = usuarioCriteria.uniqueResult();
+		if (uniqueResult != null) {
+			usuario = (UsuarioEntity)uniqueResult;
+		}
+		
 		DetachedCriteria criteria = DetachedCriteria.forClass(EstadiaEntity.class);  
 		criteria.createAlias("usuario", "usu");
-		criteria.add(Restrictions.eq("usu.idUsuario", idUsuario));
+		criteria.add(Restrictions.eq("usu.idUsuario", usuario.getId()));
 		criteria.add(Restrictions.isNull("dt_saida"));
 		criteria.add(Restrictions.isNotEmpty("dt_entrada"));		
 		List<EstadiaPojo> list = (List<EstadiaPojo>) hibernateTemplate.findByCriteria(criteria);
