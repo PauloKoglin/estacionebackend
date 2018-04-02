@@ -97,13 +97,11 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 	
 	@SuppressWarnings("unchecked")
 	public List<EstadiaPojo> findAllByEstacionamentoId(Long idEstacionamento) {
-		System.out.println("Realizando consulta pelo ID do estacionamento.");
-		//Criteria criteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(EstadiaEntity.class);		
+		System.out.println("Realizando consulta pelo ID do estacionamento.");		
 		DetachedCriteria criteria = DetachedCriteria.forClass(EstadiaEntity.class);  
 		criteria.createAlias("estacionamento", "et");
 		criteria.add(Restrictions.eq("et.idEstacionamento", idEstacionamento));
-		
-		
+				
 		List<EstadiaPojo> list = (List<EstadiaPojo>) hibernateTemplate.findByCriteria(criteria);
 		
 		if (!list.isEmpty()) {
@@ -117,17 +115,40 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 		});*/
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<EstadiaPojo> findAllByUsuarioId(Long idUsuario) {
-		return findAll(crit -> {
-			crit.add(Restrictions.eq("id_usuario", idUsuario));
-		});
+		System.out.println("Realizando consulta pelo ID do usuário.");		
+		DetachedCriteria criteria = DetachedCriteria.forClass(EstadiaEntity.class);  
+		criteria.createAlias("usuario", "usu");
+		criteria.add(Restrictions.eq("usu.idUsuario", idUsuario));
+				
+		List<EstadiaPojo> list = (List<EstadiaPojo>) hibernateTemplate.findByCriteria(criteria);
+		
+		if (!list.isEmpty()) {
+			return list;
+		} else
+			return null;
 	}
 	
-	public EstadiaPojo findAbertaUsuarioId(Long idEstacionamento) {				
-		return findAll(crit -> {
+	@SuppressWarnings("unchecked")
+	public EstadiaPojo findAbertaUsuarioId(Long idUsuario) {				
+		System.out.println("Realizando consulta de estadia aberta.");		
+		DetachedCriteria criteria = DetachedCriteria.forClass(EstadiaEntity.class);  
+		criteria.createAlias("usuario", "usu");
+		criteria.add(Restrictions.eq("usu.idUsuario", idUsuario));
+		criteria.add(Restrictions.isNull("dt_saida"));
+		criteria.add(Restrictions.isNotEmpty("dt_entrada"));		
+		List<EstadiaPojo> list = (List<EstadiaPojo>) hibernateTemplate.findByCriteria(criteria);
+		
+		if (!list.isEmpty()) {
+			return list.get(0);
+		} else
+			return null;		
+		
+		/*return findAll(crit -> {
 			crit.add(Restrictions.eq("id_usuario", idEstacionamento));
 			crit.add(Restrictions.isNull("dt_saida"));
 			crit.add(Restrictions.isNotEmpty("dt_entrada"));
-		}).get(0);
+		}).get(0);*/
 	}
 }
