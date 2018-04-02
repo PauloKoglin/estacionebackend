@@ -5,10 +5,12 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.furb.endpoints.estadia.EstadiaPojo;
 import br.furb.model.BaseEntity;
 
 public abstract class BaseDao<T extends BaseEntity, E> {
@@ -56,10 +58,12 @@ public abstract class BaseDao<T extends BaseEntity, E> {
 	}
 
 	@Transactional(readOnly = true)
-	public List<E> findAll(Consumer<Criteria> restrictions) {
-		Criteria createCriteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(getEntityClass());
-		restrictions.accept(createCriteria);
-		List<T> list = createCriteria.list();
+	public List<E> findAll(DetachedCriteria criteria /*Consumer<Criteria> restrictions*/) {
+		//Criteria createCriteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(getEntityClass());
+		//restrictions.accept(createCriteria);
+		//List<T> list = createCriteria.list();
+		@SuppressWarnings("unchecked")
+		List<T> list = (List<T>) hibernateTemplate.findByCriteria(criteria);
 		return list.parallelStream().map(t -> {
 			E newPojo = newPojo();
 			entityToPojo(t, newPojo);

@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -116,10 +117,10 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 				
 		List<EstadiaPojo> list = (List<EstadiaPojo>) hibernateTemplate.findByCriteria(criteria);
 		
-		if (!list.isEmpty()) {
+		//if (!list.isEmpty()) {
 			return list;
-		} else
-			return null;
+		//} else
+		//	return null;
 		
 		/*return findAll(crit -> {
 			crit.createAlias("estacionamento", "est");
@@ -136,10 +137,7 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 				
 		List<EstadiaPojo> list = (List<EstadiaPojo>) hibernateTemplate.findByCriteria(criteria);
 		
-		if (!list.isEmpty()) {
-			return list;
-		} else
-			return null;
+		return list;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -172,12 +170,13 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 		criteria.add(Restrictions.eq("usu.id", usuario.getId()));
 		criteria.add(Restrictions.isNull("dataSaida"));
 		criteria.add(Restrictions.isNotNull("dataEntrada"));		
-		List<EstadiaPojo> list = (List<EstadiaPojo>) hibernateTemplate.findByCriteria(criteria);
-		
+		//List<EstadiaPojo> list = (List<EstadiaPojo>) hibernateTemplate.findByCriteria(criteria);
+		List<EstadiaPojo> list = findAll(criteria);
+				
 		if (!list.isEmpty()) {
 			return list.get(0);
 		} else
-			return null;		
+			return new EstadiaPojo();		
 		
 		/*return findAll(crit -> {
 			crit.add(Restrictions.eq("id_usuario", idEstacionamento));

@@ -32,9 +32,10 @@ public class NecessidadeController {
 
 	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
 	public List<NecessidadePojo> listarNecessidade(@PathVariable("idEvento") Long idEvento) {
-		return necessidadeDao.findAll(crit -> {
+		/*return necessidadeDao.findAll(crit -> {
 			crit.createAlias("evento", "ev");
 			crit.add(Restrictions.eq("ev.id", idEvento));
-		});
+		});*/
+		return null;
 	}
 }
