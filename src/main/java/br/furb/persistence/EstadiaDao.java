@@ -58,9 +58,21 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 		pojo.setIdEstadia(entity.getIdEstadia());
 		pojo.setIdEstacionamento(entity.getEstacionamento().getId());
 		pojo.setIdUsuario(entity.getUsuario().getId());
-		pojo.setDataEntrada(sdf.format(entity.getDataEntrada()));
-		pojo.setDataSaida(sdf.format(entity.getDataSaida()));
 		pojo.setPreco(entity.getPreco());
+		
+		if (entity.getDataEntrada() != null)
+			pojo.setDataEntrada(sdf.format(entity.getDataEntrada()));
+			
+		System.out.println("entityToPojo Entrou 6");
+			
+		if (entity.getDataSaida() != null)
+			pojo.setDataSaida(sdf.format(entity.getDataSaida()));
+			
+		System.out.println("entityToPojo Entrou 7");
+		
+		//pojo.setDataEntrada(sdf.format(entity.getDataEntrada()));
+		//pojo.setDataSaida(sdf.format(entity.getDataSaida()));
+		
 		return pojo;
 	}
 
