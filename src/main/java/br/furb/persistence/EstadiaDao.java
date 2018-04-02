@@ -41,7 +41,7 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 			
 			System.out.println("pojoToEntity Entrou 4");
 			
-			if (pojo.getDataSaida() != "")
+			if (pojo.getDataSaida() != null && !pojo.getDataSaida().isEmpty())
 				entity.setDataSaida(sdf.parse(pojo.getDataSaida()));
 			
 			System.out.println("pojoToEntity Entrou 5");
