@@ -11,6 +11,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -25,13 +26,13 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = EstacionamentoEntity.TABLE_NAME)
-@SequenceGenerator(name="estacionamento_id")
+@SequenceGenerator(name="estacionamento_sequence", sequenceName="estacionamento_id", initialValue=1, allocationSize=1)
 public class EstacionamentoEntity implements BaseEntity {
 
 	public static final String TABLE_NAME = "estacionamento";
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="estacionamento_sequence")
 	@Column(name = "id_estacionamento")
 	private Long idEstacionamento;	
 	

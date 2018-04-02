@@ -31,6 +31,7 @@ public class EstacionamentoDao extends BaseDao<EstacionamentoEntity, Estacioname
 
 	@Override
 	protected EstacionamentoEntity pojoToEntity(EstacionamentoPojo pojo, EstacionamentoEntity entity) {
+		entity.setIdEstacionamento(pojo.getIdEstacionamento());
 		entity.setNome(pojo.getNome());
 		entity.setLatitude(pojo.getLatitude());
 		entity.setLongitude(pojo.getLongitude());

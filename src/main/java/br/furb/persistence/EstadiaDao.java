@@ -100,7 +100,7 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 		System.out.println("Realizando consulta pelo ID do estacionamento.");
 		//Criteria criteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(EstadiaEntity.class);		
 		DetachedCriteria criteria = DetachedCriteria.forClass(EstadiaEntity.class);  
-		criteria.add(Restrictions.eq("estacionamento", idEstacionamento));
+		criteria.add(Restrictions.eq("estacionamento.id_estacionamento", idEstacionamento));
 		
 		
 		List<EstadiaPojo> list = (List<EstadiaPojo>) hibernateTemplate.findByCriteria(criteria);
