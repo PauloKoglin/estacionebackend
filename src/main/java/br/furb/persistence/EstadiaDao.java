@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Locale;
 
 import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -145,7 +146,11 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 		System.out.println("Realizando consulta de estadia aberta.");
 		
 		UsuarioEntity usuario = null; 
-		Criteria usuarioCriteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(UsuarioEntity.class);
+		Session session = hibernateTemplate.getSessionFactory().getCurrentSession();
+		if (!session.isConnected())
+			session = hibernateTemplate.getSessionFactory().openSession();
+		
+		Criteria usuarioCriteria = session.createCriteria(UsuarioEntity.class);
 		usuarioCriteria.add(Restrictions.or(Restrictions.eq("login", SecurityContextHolder.getContext().getAuthentication().getName())));
 		Object uniqueResult = usuarioCriteria.uniqueResult();
 		if (uniqueResult != null) {
