@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
 import br.furb.endpoints.estadia.EstadiaPojo;
+import br.furb.endpoints.usuario.UsuarioPojo;
 import br.furb.model.EstacionamentoEntity;
 import br.furb.model.EstadiaEntity;
 import br.furb.model.UsuarioEntity;
@@ -146,7 +147,16 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 		System.out.println("Realizando consulta de estadia aberta.");
 		
 		UsuarioEntity usuario = null; 
-		Session session = hibernateTemplate.getSessionFactory().getCurrentSession();
+		DetachedCriteria criteriaUsuario = DetachedCriteria.forClass(UsuarioEntity.class);  
+		criteriaUsuario.add(Restrictions.eq("login", SecurityContextHolder.getContext().getAuthentication().getName()));
+		List<UsuarioEntity> usuarioList = (List<UsuarioEntity>) hibernateTemplate.findByCriteria(criteriaUsuario);
+		
+		if (!usuarioList.isEmpty()) {
+			usuario = usuarioList.get(0);
+			System.out.println("Encontrou usuário. " + usuario.toString());
+		} 		
+		
+		/*Session session = hibernateTemplate.getSessionFactory().getCurrentSession();
 		if (!session.isConnected())
 			session = hibernateTemplate.getSessionFactory().openSession();
 		
@@ -155,7 +165,7 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 		Object uniqueResult = usuarioCriteria.uniqueResult();
 		if (uniqueResult != null) {
 			usuario = (UsuarioEntity)uniqueResult;
-		}
+		}*/
 		
 		DetachedCriteria criteria = DetachedCriteria.forClass(EstadiaEntity.class);  
 		criteria.createAlias("usuario", "usu");
