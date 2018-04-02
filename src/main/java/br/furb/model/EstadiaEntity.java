@@ -37,11 +37,11 @@ public class EstadiaEntity implements BaseEntity {
 	private Long idEstadia;
 	
 	@ManyToOne(targetEntity = UsuarioEntity.class, cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_usuario")
+	@JoinColumn(name = "usuario_id")
 	private UsuarioEntity usuario;
 	
 	@ManyToOne(targetEntity = EstacionamentoEntity.class, cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_estacionamento")
+	@JoinColumn(name = "estacionamento_id")
 	private EstacionamentoEntity estacionamento;
 	
 	@Column(name = "dt_entrada")
