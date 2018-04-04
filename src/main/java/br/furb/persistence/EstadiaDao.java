@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import org.hibernate.FlushMode;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -263,6 +264,7 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 		estadia.setIdEstacionamento(idEstacionamento);		
 		estadia.setDataEntrada(sdf.format(new Date()));
 						
+		hibernateTemplate.getSessionFactory().getCurrentSession().setFlushMode(FlushMode.AUTO);
 		return save(estadia, null);
 	}
 }
