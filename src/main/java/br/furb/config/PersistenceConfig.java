@@ -74,7 +74,9 @@ public class PersistenceConfig {
 	@Bean
 	@Autowired
 	public HibernateTemplate getTemplate(SessionFactory sessionFactory){
-		return new HibernateTemplate(sessionFactory);
+		HibernateTemplate hibernateTemplate = new HibernateTemplate(sessionFactory);
+		hibernateTemplate.setCheckWriteOperations(false);
+		return hibernateTemplate; //new HibernateTemplate(sessionFactory);
 	}
 /*
 	Properties additionalProperties() {
