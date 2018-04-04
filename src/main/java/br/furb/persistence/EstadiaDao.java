@@ -248,7 +248,7 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 	public EstadiaPojo iniciarEstadia(Long idEstacionamento) {
 		System.out.println("Iniciando estadia...");
 		
-		UsuarioEntity usuario = null; 
+		/*UsuarioEntity usuario = null; 
 		DetachedCriteria criteriaUsuario = DetachedCriteria.forClass(UsuarioEntity.class);  
 		criteriaUsuario.add(Restrictions.eq("login", SecurityContextHolder.getContext().getAuthentication().getName()));
 		List<UsuarioEntity> usuarioList = (List<UsuarioEntity>) hibernateTemplate.findByCriteria(criteriaUsuario);
@@ -256,10 +256,10 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 		if (!usuarioList.isEmpty()) {
 			usuario = usuarioList.get(0);
 			System.out.println("Encontrou usuário. " + usuario.toString());
-		} 
+		} */
 		
 		EstadiaPojo estadia = new EstadiaPojo();
-		estadia.setIdUsuario(usuario.getId());
+		//estadia.setIdUsuario(usuario.getId());
 		estadia.setIdEstacionamento(idEstacionamento);		
 		estadia.setDataEntrada(sdf.format(new Date()));
 						
