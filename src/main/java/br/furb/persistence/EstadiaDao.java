@@ -1,28 +1,19 @@
 package br.furb.persistence;
 
-import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.Instant;
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
 
-import org.hibernate.Criteria;
-import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
-import com.sun.org.apache.xerces.internal.impl.dv.xs.DecimalDV;
-
 import br.furb.endpoints.estadia.EstadiaPojo;
-import br.furb.endpoints.usuario.UsuarioPojo;
 import br.furb.model.EstacionamentoEntity;
 import br.furb.model.EstadiaEntity;
 import br.furb.model.UsuarioEntity;
@@ -38,6 +29,7 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 		return EstadiaEntity.class;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected EstadiaEntity pojoToEntity(EstadiaPojo pojo, EstadiaEntity entity) {
 		entity.setIdEstadia(pojo.getIdEstadia());
@@ -45,13 +37,23 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 		entity.setEstacionamento(hibernateTemplate.load(EstacionamentoEntity.class, pojo.getIdEstacionamento()));
 		System.out.println("pojoToEntity Entrou 2");
 		
-		UsuarioEntity usuario = null; 
+		/*UsuarioEntity usuario = null; 
 		Criteria usuarioCriteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(UsuarioEntity.class);
 		usuarioCriteria.add(Restrictions.or(Restrictions.eq("login", SecurityContextHolder.getContext().getAuthentication().getName())));
 		Object uniqueResult = usuarioCriteria.uniqueResult();
 		if (uniqueResult != null) {
 			usuario = (UsuarioEntity)uniqueResult;
-		}
+		}*/
+		UsuarioEntity usuario = null; 
+		DetachedCriteria criteriaUsuario = DetachedCriteria.forClass(UsuarioEntity.class);  
+		criteriaUsuario.add(Restrictions.eq("login", SecurityContextHolder.getContext().getAuthentication().getName()));
+		List<UsuarioEntity> usuarioList = (List<UsuarioEntity>) hibernateTemplate.findByCriteria(criteriaUsuario);
+		
+		if (!usuarioList.isEmpty()) {
+			usuario = usuarioList.get(0);
+			System.out.println("Encontrou usuário. " + usuario.toString());
+		} 
+		
 		entity.setUsuario(usuario);
 		
 		System.out.println("pojoToEntity Entrou 3");

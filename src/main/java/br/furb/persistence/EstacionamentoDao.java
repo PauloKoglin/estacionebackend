@@ -3,7 +3,10 @@
  */
 package br.furb.persistence;
 
+import java.util.List;
+
 import org.hibernate.Criteria;
+import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
@@ -29,6 +32,7 @@ public class EstacionamentoDao extends BaseDao<EstacionamentoEntity, Estacioname
 		return EstacionamentoEntity.class;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected EstacionamentoEntity pojoToEntity(EstacionamentoPojo pojo, EstacionamentoEntity entity) {
 		entity.setIdEstacionamento(pojo.getIdEstacionamento());
@@ -52,13 +56,21 @@ public class EstacionamentoDao extends BaseDao<EstacionamentoEntity, Estacioname
 				entity.getHorarios().add(horarioEntity);
 			}		
 		}*/
-		Criteria criteria = hibernateTemplate.getSessionFactory().getCurrentSession()
+		/*Criteria criteria = hibernateTemplate.getSessionFactory().getCurrentSession()
 				.createCriteria(UsuarioEntity.class);
 		criteria.add(Restrictions.or(Restrictions.eq("login", SecurityContextHolder.getContext().getAuthentication().getName())));
 		Object uniqueResult = criteria.uniqueResult();
 		if (uniqueResult != null) {
 			entity.setUsuario((UsuarioEntity)uniqueResult);
-		}
+		}*/
+		DetachedCriteria criteriaUsuario = DetachedCriteria.forClass(UsuarioEntity.class);  
+		criteriaUsuario.add(Restrictions.eq("login", SecurityContextHolder.getContext().getAuthentication().getName()));
+		List<UsuarioEntity> usuarioList = (List<UsuarioEntity>) hibernateTemplate.findByCriteria(criteriaUsuario);
+		
+		if (!usuarioList.isEmpty()) {
+			entity.setUsuario(usuarioList.get(0));
+		} 
+		
 		return entity;
 	}
 
