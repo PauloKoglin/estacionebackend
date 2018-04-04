@@ -19,7 +19,7 @@ public abstract class BaseDao<T extends BaseEntity, E> {
 
 	public abstract Class<T> getEntityClass();
 
-	@Transactional(rollbackFor = Throwable.class)
+	@Transactional(rollbackFor = Throwable.class, readOnly = false)
 	public E save(E pojo, Long id, Object...adicionais) {
 		// Alteração
 		if (id != null) {
