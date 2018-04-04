@@ -59,7 +59,7 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 		System.out.println("pojoToEntity Entrou 3");
 		entity.setPreco(pojo.getPreco());
 		try {
-			if (pojo.getDataEntrada() != "")
+			if (pojo.getDataEntrada() != "" && !pojo.getDataEntrada().isEmpty())
 				entity.setDataEntrada(sdf.parse(pojo.getDataEntrada()));
 			
 			System.out.println("pojoToEntity Entrou 4");
@@ -261,7 +261,7 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 		EstadiaPojo estadia = new EstadiaPojo();
 		estadia.setIdUsuario(usuario.getId());
 		estadia.setIdEstacionamento(idEstacionamento);		
-		estadia.setDataSaida(sdf.format(new Date()));
+		estadia.setDataEntrada(sdf.format(new Date()));
 						
 		return save(estadia, null);
 	}
