@@ -1,7 +1,13 @@
 package br.furb.persistence;
 
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
@@ -12,6 +18,8 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
+
+import com.sun.org.apache.xerces.internal.impl.dv.xs.DecimalDV;
 
 import br.furb.endpoints.estadia.EstadiaPojo;
 import br.furb.endpoints.usuario.UsuarioPojo;
@@ -200,5 +208,37 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 			crit.add(Restrictions.isNull("dt_saida"));
 			crit.add(Restrictions.isNotEmpty("dt_entrada"));
 		}).get(0);*/
+	}
+	
+	public EstadiaPojo finalizarEstadia(Long idEstacionamento) {
+		EstadiaPojo estadia = findAbertaUsuario();
+		EstacionamentoEntity estacionamento = hibernateTemplate.load(EstacionamentoEntity.class, idEstacionamento); 
+		Date dataSaida = new Date();
+		estadia.setDataSaida(sdf.format(dataSaida));
+		Instant inicio = null;
+		try {
+			inicio = sdf.parse(estadia.getDataEntrada()).toInstant();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Instant fim = dataSaida.toInstant();
+		Duration d = Duration.between(inicio , fim);
+		Long tempo = d.toMinutes();
+		
+		if (tempo < 15)
+			estadia.setPreco(0);
+		else if (tempo > 15 && tempo <= 60)
+			estadia.setPreco(estacionamento.getPreco());
+		else {
+			double horas = tempo;
+			double resto = horas / 1;
+			if (resto == 0)
+				estadia.setPreco(estacionamento.getPreco() * horas);
+			else
+				estadia.setPreco(estacionamento.getPreco() * horas + estacionamento.getPreco());			
+		}
+						
+		return save(estadia, estadia.getIdEstadia());
 	}
 }

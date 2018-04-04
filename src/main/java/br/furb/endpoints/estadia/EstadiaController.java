@@ -61,10 +61,9 @@ public class EstadiaController {
 	}
 
 	@RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE,
-			method = RequestMethod.POST, value = {"/{idEstadia}"})
-	public ResponseEntity<EstadiaPojo> alterarEstadia(@RequestBody EstadiaPojo Estadia,
-			@PathVariable("idEstadia") Long idEstadia) {
-		return new ResponseEntity<>(estadiaDao.save(Estadia, idEstadia), HttpStatus.OK);
+			method = RequestMethod.POST, value = {"/finalizarEstadia/{idEstacionamento}"})
+	public ResponseEntity<EstadiaPojo> finalizarEstadia(@PathVariable("idEstacionamento") Long idEstacionamento) {
+		return new ResponseEntity<>(estadiaDao.finalizarEstadia(idEstacionamento), HttpStatus.OK);
 	}
 
 	@RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE,
