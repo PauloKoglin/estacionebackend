@@ -8,11 +8,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import org.hibernate.FlushMode;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.furb.endpoints.estadia.EstadiaPojo;
 import br.furb.model.EstacionamentoEntity;
@@ -213,6 +213,7 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 		}).get(0);*/
 	}
 	
+	@Transactional(rollbackFor = Throwable.class)
 	public EstadiaPojo finalizarEstadia(Long idEstacionamento) {
 		EstadiaPojo estadia = findAbertaUsuario();
 		EstacionamentoEntity estacionamento = hibernateTemplate.load(EstacionamentoEntity.class, idEstacionamento); 
@@ -245,7 +246,7 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 		return save(estadia, estadia.getIdEstadia());
 	}
 	
-	@SuppressWarnings("unchecked")
+	@Transactional(rollbackFor = Throwable.class)
 	public EstadiaPojo iniciarEstadia(Long idEstacionamento) {
 		System.out.println("Iniciando estadia...");
 		
@@ -264,7 +265,6 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 		estadia.setIdEstacionamento(idEstacionamento);		
 		estadia.setDataEntrada(sdf.format(new Date()));
 						
-		hibernateTemplate.getSessionFactory().getCurrentSession().setFlushMode(FlushMode.AUTO);
-		return save(estadia, null);
+		return this.save(estadia, null);
 	}
 }
