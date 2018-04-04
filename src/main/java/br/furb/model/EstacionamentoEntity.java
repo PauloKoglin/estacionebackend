@@ -36,7 +36,7 @@ public class EstacionamentoEntity implements BaseEntity {
 	@Column(name = "id_estacionamento")
 	private Long idEstacionamento;	
 	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(targetEntity = UsuarioEntity.class)
 	@JoinColumn(name = "usuario_id")
 	private UsuarioEntity usuarioProprietario;
 	
