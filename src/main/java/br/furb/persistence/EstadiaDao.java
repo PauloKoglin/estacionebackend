@@ -4,7 +4,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -23,7 +25,9 @@ import br.furb.model.UsuarioEntity;
 @Repository
 public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 	
-	private static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
+	private static final Locale locale = new Locale("pt","BR");
+	private static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", new Locale("pt","BR"));
+	
 
 	@Override
 	public Class<EstadiaEntity> getEntityClass() {
@@ -217,7 +221,7 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 	public EstadiaPojo finalizarEstadia(Long idEstacionamento) {
 		EstadiaPojo estadia = findAbertaUsuario();
 		EstacionamentoEntity estacionamento = hibernateTemplate.load(EstacionamentoEntity.class, idEstacionamento); 
-		Date dataSaida = new Date();
+		Date dataSaida = new GregorianCalendar(locale).getTime();
 		estadia.setDataSaida(sdf.format(dataSaida));
 		Instant inicio = null;
 		try {
@@ -263,7 +267,7 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 		EstadiaPojo estadia = new EstadiaPojo();
 		//estadia.setIdUsuario(usuario.getId());
 		estadia.setIdEstacionamento(idEstacionamento);		
-		estadia.setDataEntrada(sdf.format(new Date()));
+		estadia.setDataEntrada(sdf.format(new GregorianCalendar(locale).getTime()));
 						
 		return this.save(estadia, null);
 	}
