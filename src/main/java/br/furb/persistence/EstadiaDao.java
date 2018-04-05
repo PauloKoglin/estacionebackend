@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
@@ -26,8 +27,11 @@ import br.furb.model.UsuarioEntity;
 public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 	
 	private static final Locale locale = new Locale("pt","BR");
-	private static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", new Locale("pt","BR"));
+	private final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", new Locale("pt","BR"));
 	
+	public EstadiaDao() {
+		this.sdf.setTimeZone(TimeZone.getTimeZone("GMT-3"));
+	}
 
 	@Override
 	public Class<EstadiaEntity> getEntityClass() {
