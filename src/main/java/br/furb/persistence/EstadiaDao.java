@@ -27,7 +27,7 @@ import br.furb.model.UsuarioEntity;
 public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 	
 	private static final Locale locale = new Locale("pt","BR");
-	private final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", new Locale("pt","BR"));
+	private final SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm", new Locale("pt","BR"));
 	
 	public EstadiaDao() {
 		this.sdf.setTimeZone(TimeZone.getTimeZone("GMT-3"));
