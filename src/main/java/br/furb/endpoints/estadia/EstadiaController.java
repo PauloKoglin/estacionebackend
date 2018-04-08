@@ -36,7 +36,6 @@ public class EstadiaController {
 
 	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
 	public ResponseEntity<List<EstadiaPojo>> getEstadias() {
-		//List<EstadiaPojo> findAll = EstadiaDao.findAll();
 		return new ResponseEntity<>(estadiaDao.findAll(), HttpStatus.OK);
 	}
 	

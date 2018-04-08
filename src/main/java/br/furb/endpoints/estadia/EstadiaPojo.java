@@ -3,6 +3,8 @@
  */
 package br.furb.endpoints.estadia;
 
+import java.util.Date;
+
 /**
  * @author PauloArnoldo
  *
@@ -11,8 +13,8 @@ public class EstadiaPojo {
 	private Long idEstadia;
 	private Long idUsuario;
 	private Long idEstacionamento;
-	private String dataEntrada;
-	private String dataSaida;
+	private Date dataEntrada;
+	private Date dataSaida;
 	private double preco;
 	
 	
@@ -34,16 +36,16 @@ public class EstadiaPojo {
 	public void setIdEstacionamento(Long idEstacionamento) {
 		this.idEstacionamento = idEstacionamento;
 	}
-	public String getDataEntrada() {
+	public Date getDataEntrada() {
 		return dataEntrada;
 	}
-	public void setDataEntrada(String dataEntrada) {
+	public void setDataEntrada(Date dataEntrada) {
 		this.dataEntrada = dataEntrada;
 	}
-	public String getDataSaida() {
+	public Date getDataSaida() {
 		return dataSaida;
 	}
-	public void setDataSaida(String dataSaida) {
+	public void setDataSaida(Date dataSaida) {
 		this.dataSaida = dataSaida;
 	}
 	public double getPreco() {

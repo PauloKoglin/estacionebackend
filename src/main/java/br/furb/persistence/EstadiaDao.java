@@ -65,7 +65,7 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 		
 		entity.setUsuario(usuario);
 		
-		System.out.println("pojoToEntity Entrou 3");
+		/*System.out.println("pojoToEntity Entrou 3");
 		entity.setPreco(pojo.getPreco());
 		try {
 			if (pojo.getDataEntrada() != "" && !pojo.getDataEntrada().isEmpty())
@@ -80,7 +80,9 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 		} catch (ParseException e) {
 			System.out.println(e.getMessage()); 
 			e.printStackTrace();
-		}	
+		}*/
+		entity.setDataEntrada(pojo.getDataEntrada());
+		entity.setDataSaida(pojo.getDataSaida());
 		
 		return entity;
 	}
@@ -92,13 +94,16 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 		pojo.setIdUsuario(entity.getUsuario().getId());
 		pojo.setPreco(entity.getPreco());
 		
-		if (entity.getDataEntrada() != null)
+		/*if (entity.getDataEntrada() != null)
 			pojo.setDataEntrada(sdf.format(entity.getDataEntrada()));
 			
 		System.out.println("entityToPojo Entrou 6");
 			
 		if (entity.getDataSaida() != null)
-			pojo.setDataSaida(sdf.format(entity.getDataSaida()));
+			pojo.setDataSaida(sdf.format(entity.getDataSaida()));*/
+		
+		pojo.setDataEntrada(entity.getDataEntrada());
+		pojo.setDataSaida(entity.getDataSaida());
 			
 		System.out.println("entityToPojo Entrou 7");
 		
@@ -226,14 +231,16 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 		EstadiaPojo estadia = findAbertaUsuario();
 		EstacionamentoEntity estacionamento = hibernateTemplate.load(EstacionamentoEntity.class, idEstacionamento); 
 		Date dataSaida = new GregorianCalendar(locale).getTime();
-		estadia.setDataSaida(sdf.format(dataSaida));
+		//estadia.setDataSaida(sdf.format(dataSaida));
+		estadia.setDataSaida(dataSaida);
 		Instant inicio = null;
-		try {
+		/*try {
 			inicio = sdf.parse(estadia.getDataEntrada()).toInstant();
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
+		inicio = estadia.getDataEntrada().toInstant();
 		Instant fim = dataSaida.toInstant();
 		Duration d = Duration.between(inicio , fim);
 		Long tempo = d.toMinutes();
@@ -271,7 +278,8 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 		EstadiaPojo estadia = new EstadiaPojo();
 		//estadia.setIdUsuario(usuario.getId());
 		estadia.setIdEstacionamento(idEstacionamento);		
-		estadia.setDataEntrada(sdf.format(new GregorianCalendar(locale).getTime()));
+		//estadia.setDataEntrada(sdf.format(new GregorianCalendar(locale).getTime()));
+		estadia.setDataEntrada(new GregorianCalendar(locale).getTime());
 						
 		return this.save(estadia, null);
 	}
