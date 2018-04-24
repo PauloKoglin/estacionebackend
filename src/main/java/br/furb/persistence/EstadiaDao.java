@@ -12,6 +12,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
@@ -174,7 +175,8 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 		List<EstadiaPojo> list = (List<EstadiaPojo>) hibernateTemplate.findByCriteria(criteria);*/
 		DetachedCriteria criteria = DetachedCriteria.forClass(EstadiaEntity.class);  
 		criteria.createAlias("usuario", "usu");
-		criteria.add(Restrictions.eq("usu.id", usuario.getId()));		
+		criteria.add(Restrictions.eq("usu.id", usuario.getId()));
+		criteria.addOrder(Order.desc("id_estadia"));
 		//List<EstadiaPojo> list = (List<EstadiaPojo>) hibernateTemplate.findByCriteria(criteria);
 		List<EstadiaPojo> list = findAll(criteria);
 		
@@ -251,10 +253,9 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 				estadia.setPreco(estacionamento.getPreco() * horas + estacionamento.getPreco());			
 		}	
 		
-		UsuarioDao usuarioDao = new UsuarioDao();		
 		
 		PagamentoDao pagamento = new PagamentoDao();
-		String idPagamento = pagamento.realizarPagamento(estadia, usuarioDao.obterUsuarioPojoPorToken());
+		String idPagamento = pagamento.realizarPagamento(estadia);
 		System.out.println("Pagou - ID: " + idPagamento);
 						
 		return save(estadia, estadia.getIdEstadia());

@@ -26,7 +26,7 @@ public class PagamentoDao {
 	private final String MERCHANT_ID = "1198ba2c-3097-41bd-9205-44d8cc7488d2";
 	private final String MERCHANT_KEY = "WMZZZOTCFFWYQYADNHSUBPFQJBOWOLDNJIFRWTZP";
 	
-	public String realizarPagamento(EstadiaPojo estadia, UsuarioPojo usuario) {
+	public String realizarPagamento(EstadiaPojo estadia) {
 		System.out.println("Iniciando pagamento via cartão de crédito!");
 		// Configure seu merchant
 		Merchant merchant = new Merchant(this.MERCHANT_ID, this.MERCHANT_KEY);
@@ -35,7 +35,7 @@ public class PagamentoDao {
 		Sale sale = new Sale(estadia.getIdEstadia().toString());
 
 		// Crie uma instância de Customer informando o nome do cliente
-		Customer customer = sale.customer(usuario.getNome());
+		//Customer customer = sale.customer(usuario.getNome());
 
 		// Crie uma instância de Payment informando o valor do pagamento
 		int valor = new Integer(Double.toString(estadia.getPreco() * 100));
