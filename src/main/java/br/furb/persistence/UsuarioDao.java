@@ -1,8 +1,12 @@
 package br.furb.persistence;
 
+import java.util.List;
+
 import org.hibernate.Criteria;
+import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -61,6 +65,19 @@ public class UsuarioDao extends BaseDao<UsuarioEntity, UsuarioPojo> {
 	@Override
 	protected UsuarioPojo newPojo(Object...adicionais) {
 		return new UsuarioPojo();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public UsuarioPojo obterUsuarioPojoPorToken() {
+		UsuarioEntity usuario = null; 
+		DetachedCriteria criteriaUsuario = DetachedCriteria.forClass(UsuarioEntity.class);  
+		criteriaUsuario.add(Restrictions.eq("login", SecurityContextHolder.getContext().getAuthentication().getName()));
+		List<UsuarioEntity> usuarioList = (List<UsuarioEntity>) hibernateTemplate.findByCriteria(criteriaUsuario);
+		
+		if (!usuarioList.isEmpty()) {
+			usuario = usuarioList.get(0);
+		} 
+		return entityToPojo(usuario, new UsuarioPojo());
 	}
 
 }

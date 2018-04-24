@@ -231,15 +231,8 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 		EstadiaPojo estadia = findAbertaUsuario();
 		EstacionamentoEntity estacionamento = hibernateTemplate.load(EstacionamentoEntity.class, idEstacionamento); 
 		Date dataSaida = new GregorianCalendar(locale).getTime();
-		//estadia.setDataSaida(sdf.format(dataSaida));
 		estadia.setDataSaida(dataSaida);
 		Instant inicio = null;
-		/*try {
-			inicio = sdf.parse(estadia.getDataEntrada()).toInstant();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
 		inicio = estadia.getDataEntrada().toInstant();
 		Instant fim = dataSaida.toInstant();
 		Duration d = Duration.between(inicio , fim);
@@ -250,13 +243,19 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 		else if (tempo > 15 && tempo <= 60)
 			estadia.setPreco(estacionamento.getPreco());
 		else {
-			double horas = tempo;
-			double resto = horas / 1;
+			long horas = tempo;
+			double resto = Math.floorMod(horas, 60);
 			if (resto == 0)
 				estadia.setPreco(estacionamento.getPreco() * horas);
 			else
 				estadia.setPreco(estacionamento.getPreco() * horas + estacionamento.getPreco());			
-		}
+		}	
+		
+		UsuarioDao usuarioDao = new UsuarioDao();		
+		
+		PagamentoDao pagamento = new PagamentoDao();
+		String idPagamento = pagamento.realizarPagamento(estadia, usuarioDao.obterUsuarioPojoPorToken());
+		System.out.println("Pagou - ID: " + idPagamento);
 						
 		return save(estadia, estadia.getIdEstadia());
 	}

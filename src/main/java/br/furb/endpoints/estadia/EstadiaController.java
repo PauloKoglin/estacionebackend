@@ -6,6 +6,7 @@ package br.furb.endpoints.estadia;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -13,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.orm.hibernate5.HibernateTemplate;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +24,11 @@ import org.springframework.web.bind.annotation.RestController;
 import br.furb.endpoints.estadia.EstadiaPojo;
 
 
+import br.furb.endpoints.usuario.UsuarioPojo;
+import br.furb.model.UsuarioEntity;
 import br.furb.persistence.EstadiaDao;
+import br.furb.persistence.PagamentoDao;
+import br.furb.persistence.UsuarioDao;
 
 /**
  * @author PauloArnoldo
@@ -62,7 +68,8 @@ public class EstadiaController {
 	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE,
 			method = RequestMethod.POST, value = {"/finalizarEstadia/{idEstacionamento}"})
 	public ResponseEntity<EstadiaPojo> finalizarEstadia(@PathVariable("idEstacionamento") Long idEstacionamento) {
-		return new ResponseEntity<>(estadiaDao.finalizarEstadia(idEstacionamento), HttpStatus.OK);
+		EstadiaPojo estadia = estadiaDao.finalizarEstadia(idEstacionamento);		
+		return new ResponseEntity<>(estadia, HttpStatus.OK);
 	}
 
 	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE,
@@ -70,5 +77,7 @@ public class EstadiaController {
 	public ResponseEntity<EstadiaPojo> iniciarEstadia(@PathVariable("idEstacionamento") Long idEstacionamento) {
 		return new ResponseEntity<>(estadiaDao.iniciarEstadia(idEstacionamento), HttpStatus.OK);
 	}
+	
+	
 }
 
