@@ -53,8 +53,7 @@ public class PagamentoDao {
 		try {
 		    // Configure o SDK com seu merchant e o ambiente apropriado para criar a venda
 		    sale = new CieloEcommerce(merchant, Environment.SANDBOX).createSale(sale);
-		    System.out.println("Pagamento confirmado! Id:" + sale.getPayment().getPaymentId());
-		    System.out.println("Retorno" + sale.getPayment().toString());
+		    System.out.println("Pagamento confirmado! Retorno : " + sale.getPayment().toString());
 		    // Com a venda criada na Cielo, já temos o ID do pagamento, TID e demais
 		    // dados retornados pela Cielo
 		    

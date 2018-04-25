@@ -43,17 +43,8 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 	@Override
 	protected EstadiaEntity pojoToEntity(EstadiaPojo pojo, EstadiaEntity entity) {
 		entity.setIdEstadia(pojo.getIdEstadia());
-		System.out.println("pojoToEntity Entrou 1");
 		entity.setEstacionamento(hibernateTemplate.load(EstacionamentoEntity.class, pojo.getIdEstacionamento()));
-		System.out.println("pojoToEntity Entrou 2");
 		
-		/*UsuarioEntity usuario = null; 
-		Criteria usuarioCriteria = hibernateTemplate.getSessionFactory().getCurrentSession().createCriteria(UsuarioEntity.class);
-		usuarioCriteria.add(Restrictions.or(Restrictions.eq("login", SecurityContextHolder.getContext().getAuthentication().getName())));
-		Object uniqueResult = usuarioCriteria.uniqueResult();
-		if (uniqueResult != null) {
-			usuario = (UsuarioEntity)uniqueResult;
-		}*/
 		UsuarioEntity usuario = null; 
 		DetachedCriteria criteriaUsuario = DetachedCriteria.forClass(UsuarioEntity.class);  
 		criteriaUsuario.add(Restrictions.eq("login", SecurityContextHolder.getContext().getAuthentication().getName()));
@@ -65,23 +56,6 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 		} 
 		
 		entity.setUsuario(usuario);
-		
-		/*System.out.println("pojoToEntity Entrou 3");
-		entity.setPreco(pojo.getPreco());
-		try {
-			if (pojo.getDataEntrada() != "" && !pojo.getDataEntrada().isEmpty())
-				entity.setDataEntrada(sdf.parse(pojo.getDataEntrada()));
-			
-			System.out.println("pojoToEntity Entrou 4");
-			
-			if (pojo.getDataSaida() != null && !pojo.getDataSaida().isEmpty())
-				entity.setDataSaida(sdf.parse(pojo.getDataSaida()));
-			
-			System.out.println("pojoToEntity Entrou 5");
-		} catch (ParseException e) {
-			System.out.println(e.getMessage()); 
-			e.printStackTrace();
-		}*/
 		entity.setDataEntrada(pojo.getDataEntrada());
 		entity.setDataSaida(pojo.getDataSaida());
 		
@@ -93,23 +67,9 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 		pojo.setIdEstadia(entity.getIdEstadia());
 		pojo.setIdEstacionamento(entity.getEstacionamento().getId());
 		pojo.setIdUsuario(entity.getUsuario().getId());
-		pojo.setPreco(entity.getPreco());
-		
-		/*if (entity.getDataEntrada() != null)
-			pojo.setDataEntrada(sdf.format(entity.getDataEntrada()));
-			
-		System.out.println("entityToPojo Entrou 6");
-			
-		if (entity.getDataSaida() != null)
-			pojo.setDataSaida(sdf.format(entity.getDataSaida()));*/
-		
+		pojo.setPreco(entity.getPreco());		
 		pojo.setDataEntrada(entity.getDataEntrada());
 		pojo.setDataSaida(entity.getDataSaida());
-			
-		System.out.println("entityToPojo Entrou 7");
-		
-		//pojo.setDataEntrada(sdf.format(entity.getDataEntrada()));
-		//pojo.setDataSaida(sdf.format(entity.getDataSaida()));
 		
 		return pojo;
 	}
@@ -117,14 +77,6 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 	@Override
 	protected EstadiaEntity newEntity(Object...adicionais) {
 		EstadiaEntity estadiaEntity = new EstadiaEntity();
-		/*if (adicionais != null && adicionais.length > 0) {
-			EstacionamentoEntity estacionamentoEntity = hibernateTemplate.load(EstacionamentoEntity.class, (Long)adicionais[0]);
-			estadiaEntity.setEstacionamento(estacionamentoEntity);			
-		}*/
-		/*if (adicionais != null && adicionais.length > 1) {
-			UsuarioEntity usuarioEntity = hibernateTemplate.load(UsuarioEntity.class, (Long)adicionais[1]);
-			estadiaEntity.setUsuario(usuarioEntity);			
-		}*/
 		return estadiaEntity;
 	}
 
@@ -176,7 +128,7 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 		DetachedCriteria criteria = DetachedCriteria.forClass(EstadiaEntity.class);  
 		criteria.createAlias("usuario", "usu");
 		criteria.add(Restrictions.eq("usu.id", usuario.getId()));
-		criteria.addOrder(Order.desc("id_estadia"));
+		criteria.addOrder(Order.desc("idEstadia"));
 		//List<EstadiaPojo> list = (List<EstadiaPojo>) hibernateTemplate.findByCriteria(criteria);
 		List<EstadiaPojo> list = findAll(criteria);
 		
@@ -197,17 +149,6 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 			System.out.println("Encontrou usuário. " + usuario.toString());
 		} 	
 		
-		/*Session session = hibernateTemplate.getSessionFactory().getCurrentSession();
-		if (!session.isConnected())
-			session = hibernateTemplate.getSessionFactory().openSession();
-		
-		Criteria usuarioCriteria = session.createCriteria(UsuarioEntity.class);
-		usuarioCriteria.add(Restrictions.or(Restrictions.eq("login", SecurityContextHolder.getContext().getAuthentication().getName())));
-		Object uniqueResult = usuarioCriteria.uniqueResult();
-		if (uniqueResult != null) {
-			usuario = (UsuarioEntity)uniqueResult;
-		}*/
-		
 		DetachedCriteria criteria = DetachedCriteria.forClass(EstadiaEntity.class);  
 		criteria.createAlias("usuario", "usu");
 		criteria.add(Restrictions.eq("usu.id", usuario.getId()));
@@ -219,19 +160,14 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 		if (!list.isEmpty()) {
 			return list.get(0);
 		} else
-			return new EstadiaPojo();		
-		
-		/*return findAll(crit -> {
-			crit.add(Restrictions.eq("id_usuario", idEstacionamento));
-			crit.add(Restrictions.isNull("dt_saida"));
-			crit.add(Restrictions.isNotEmpty("dt_entrada"));
-		}).get(0);*/
+			return new EstadiaPojo();
 	}
 	
 	@Transactional(rollbackFor = Throwable.class)
 	public EstadiaPojo finalizarEstadia(Long idEstacionamento) {
 		EstadiaPojo estadia = findAbertaUsuario();
-		EstacionamentoEntity estacionamento = hibernateTemplate.load(EstacionamentoEntity.class, idEstacionamento); 
+		EstacionamentoEntity estacionamento = hibernateTemplate.load(EstacionamentoEntity.class, idEstacionamento);
+		//UsuarioEntity usuario = hibernateTemplate.load(UsuarioEntity.class, estadia.getIdUsuario()); 
 		Date dataSaida = new GregorianCalendar(locale).getTime();
 		estadia.setDataSaida(dataSaida);
 		Instant inicio = null;
@@ -263,22 +199,10 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 	
 	@Transactional(rollbackFor = Throwable.class)
 	public EstadiaPojo iniciarEstadia(Long idEstacionamento) {
-		System.out.println("Iniciando estadia...");
-		
-		/*UsuarioEntity usuario = null; 
-		DetachedCriteria criteriaUsuario = DetachedCriteria.forClass(UsuarioEntity.class);  
-		criteriaUsuario.add(Restrictions.eq("login", SecurityContextHolder.getContext().getAuthentication().getName()));
-		List<UsuarioEntity> usuarioList = (List<UsuarioEntity>) hibernateTemplate.findByCriteria(criteriaUsuario);
-		
-		if (!usuarioList.isEmpty()) {
-			usuario = usuarioList.get(0);
-			System.out.println("Encontrou usuário. " + usuario.toString());
-		} */
-		
+		System.out.println("Iniciando estadia no estacionamento id: "+ idEstacionamento);
+				
 		EstadiaPojo estadia = new EstadiaPojo();
-		//estadia.setIdUsuario(usuario.getId());
 		estadia.setIdEstacionamento(idEstacionamento);		
-		//estadia.setDataEntrada(sdf.format(new GregorianCalendar(locale).getTime()));
 		estadia.setDataEntrada(new GregorianCalendar(locale).getTime());
 						
 		return this.save(estadia, null);
