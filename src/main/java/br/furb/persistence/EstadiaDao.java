@@ -202,7 +202,7 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 		System.out.println("Iniciando estadia no estacionamento id: "+ idEstacionamento);
 				
 		EstadiaPojo estadia = new EstadiaPojo();		
-		estadia.setEstacionamento(hibernateTemplate.load(EstacionamentoEntity.class, idEstacionamento));
+		estadia.setEstacionamento(hibernateTemplate.get(EstacionamentoEntity.class, idEstacionamento));
 		estadia.setDataEntrada(new GregorianCalendar(locale).getTime());
 						
 		return this.save(estadia, null);
