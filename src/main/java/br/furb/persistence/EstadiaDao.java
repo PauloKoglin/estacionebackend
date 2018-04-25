@@ -43,7 +43,7 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 	@Override
 	protected EstadiaEntity pojoToEntity(EstadiaPojo pojo, EstadiaEntity entity) {
 		entity.setIdEstadia(pojo.getIdEstadia());
-		entity.setEstacionamento(hibernateTemplate.load(EstacionamentoEntity.class, pojo.getIdEstacionamento()));
+		entity.setEstacionamento(hibernateTemplate.load(EstacionamentoEntity.class, pojo.getEstacionamento().getIdEstacionamento()));
 		
 		UsuarioEntity usuario = null; 
 		DetachedCriteria criteriaUsuario = DetachedCriteria.forClass(UsuarioEntity.class);  
@@ -65,7 +65,7 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 	@Override
 	protected EstadiaPojo entityToPojo(EstadiaEntity entity, EstadiaPojo pojo) {
 		pojo.setIdEstadia(entity.getIdEstadia());
-		pojo.setIdEstacionamento(entity.getEstacionamento().getId());
+		pojo.setEstacionamento(entity.getEstacionamento());
 		pojo.setIdUsuario(entity.getUsuario().getId());
 		pojo.setPreco(entity.getPreco());		
 		pojo.setDataEntrada(entity.getDataEntrada());
@@ -201,8 +201,8 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 	public EstadiaPojo iniciarEstadia(Long idEstacionamento) {
 		System.out.println("Iniciando estadia no estacionamento id: "+ idEstacionamento);
 				
-		EstadiaPojo estadia = new EstadiaPojo();
-		estadia.setIdEstacionamento(idEstacionamento);		
+		EstadiaPojo estadia = new EstadiaPojo();		
+		estadia.setEstacionamento(hibernateTemplate.load(EstacionamentoEntity.class, idEstacionamento));
 		estadia.setDataEntrada(new GregorianCalendar(locale).getTime());
 						
 		return this.save(estadia, null);

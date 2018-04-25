@@ -5,6 +5,9 @@ package br.furb.endpoints.estadia;
 
 import java.util.Date;
 
+import br.furb.endpoints.estacionamento.EstacionamentoPojo;
+import br.furb.model.EstacionamentoEntity;
+
 /**
  * @author PauloArnoldo
  *
@@ -12,7 +15,7 @@ import java.util.Date;
 public class EstadiaPojo {
 	private Long idEstadia;
 	private Long idUsuario;
-	private Long idEstacionamento;
+	private EstacionamentoEntity estacionamento;
 	private Date dataEntrada;
 	private Date dataSaida;
 	private double preco;
@@ -30,11 +33,11 @@ public class EstadiaPojo {
 	public void setIdUsuario(Long idUsuario) {
 		this.idUsuario = idUsuario;
 	}
-	public Long getIdEstacionamento() {
-		return idEstacionamento;
+	public EstacionamentoEntity getEstacionamento() {
+		return estacionamento;
 	}
-	public void setIdEstacionamento(Long idEstacionamento) {
-		this.idEstacionamento = idEstacionamento;
+	public void setEstacionamento(EstacionamentoEntity estacionamento) {
+		this.estacionamento = estacionamento;
 	}
 	public Date getDataEntrada() {
 		return dataEntrada;
