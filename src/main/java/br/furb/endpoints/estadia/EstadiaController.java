@@ -65,15 +65,13 @@ public class EstadiaController {
 		return new ResponseEntity<>(estadiaDao.find(idEstadia), HttpStatus.OK);
 	}
 
-	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE,
-			method = RequestMethod.POST, value = {"/finalizarEstadia/{idEstacionamento}"})
+	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST, value = {"/finalizarEstadia/{idEstacionamento}"})
 	public ResponseEntity<EstadiaPojo> finalizarEstadia(@PathVariable("idEstacionamento") Long idEstacionamento) {
 		EstadiaPojo estadia = estadiaDao.finalizarEstadia(idEstacionamento);		
 		return new ResponseEntity<>(estadia, HttpStatus.OK);
 	}
 
-	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE,
-			method = RequestMethod.POST, value = {"/iniciarEstadia/{idEstacionamento}"})
+	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST, value = {"/iniciarEstadia/{idEstacionamento}"})
 	public ResponseEntity<EstadiaPojo> iniciarEstadia(@PathVariable("idEstacionamento") Long idEstacionamento) {
 		return new ResponseEntity<>(estadiaDao.iniciarEstadia(idEstacionamento), HttpStatus.OK);
 	}

@@ -43,7 +43,7 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 	@Override
 	protected EstadiaEntity pojoToEntity(EstadiaPojo pojo, EstadiaEntity entity) {
 		entity.setIdEstadia(pojo.getIdEstadia());
-		entity.setEstacionamento(hibernateTemplate.load(EstacionamentoEntity.class, pojo.getEstacionamento().getIdEstacionamento()));
+		entity.setEstacionamento(pojo.getEstacionamento());
 		
 		UsuarioEntity usuario = null; 
 		DetachedCriteria criteriaUsuario = DetachedCriteria.forClass(UsuarioEntity.class);  
