@@ -38,7 +38,7 @@ public class PagamentoDao {
 		//Customer customer = sale.customer(usuario.getNome());
 
 		// Crie uma instância de Payment informando o valor do pagamento
-		int valor = new Integer(Double.toString(estadia.getPreco() * 100));
+		int valor = new Integer( Double.toString(Math.round(estadia.getPreco() * 100)).replace(".0", ""));
 		Payment payment = sale.payment(valor);		
 
 		// Crie  uma instância de Credit Card utilizando os dados de teste
