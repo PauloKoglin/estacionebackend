@@ -10,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.furb.endpoints.pagamento.FormaPagamentoPojo;
 import br.furb.endpoints.usuario.UsuarioPojo;
 import br.furb.model.UsuarioEntity;
 
@@ -79,5 +80,6 @@ public class UsuarioDao extends BaseDao<UsuarioEntity, UsuarioPojo> {
 		} 
 		return entityToPojo(usuario, new UsuarioPojo());
 	}
+
 
 }

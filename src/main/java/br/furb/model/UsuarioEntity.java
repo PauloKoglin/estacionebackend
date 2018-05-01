@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -46,6 +48,10 @@ public class UsuarioEntity implements BaseEntity {
 
 	@Column(name = "tp_usuario", length = 1)
 	private String tipoUsuario;
+	
+	@ManyToOne(targetEntity = FormaPagamentoEntity.class)
+	@JoinColumn(name = "formaPagamento_id")
+	private FormaPagamentoEntity formaPagamento;
 	
 	@Override
 	public Long getId() {
@@ -104,5 +110,15 @@ public class UsuarioEntity implements BaseEntity {
 	public void setTipoUsuario(String tipoUsuario) {
 		this.tipoUsuario = tipoUsuario;
 	}
+
+	public FormaPagamentoEntity getFormaPagamento() {
+		return formaPagamento;
+	}
+
+	public void setFormaPagamento(FormaPagamentoEntity formaPagamento) {
+		this.formaPagamento = formaPagamento;
+	}
+	
+	
 
 }

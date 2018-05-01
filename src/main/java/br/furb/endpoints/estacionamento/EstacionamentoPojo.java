@@ -1,6 +1,5 @@
 package br.furb.endpoints.estacionamento;
 
-import java.util.ArrayList;
 import br.furb.model.UsuarioEntity;
 
 
@@ -13,7 +12,7 @@ public class EstacionamentoPojo {
 	private double latitude;
 	private String complementoLocalizacao;
 	private double preco;
-	//private ArrayList<EstacionamentoHorariosPojo> horarios;
+	private String endereco;
 	
 	
 	public Long getIdEstacionamento() {
@@ -58,16 +57,11 @@ public class EstacionamentoPojo {
 	public void setPreco(double preco) {
 		this.preco = preco;
 	}
-	/*
-	public ArrayList<EstacionamentoHorariosPojo> getHorarios() {
-		return horarios;
+	public String getEndereco() {
+		return endereco;
 	}
-	public void setHorarios(ArrayList<EstacionamentoHorariosPojo> horarios) {
-		this.horarios = horarios;
-	}
-	*/
-		
-	
-	
+	public void setEndereco(String endereco) {
+		this.endereco = endereco;
+	}	
 	
 }

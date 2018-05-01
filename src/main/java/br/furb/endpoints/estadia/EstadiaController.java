@@ -27,7 +27,7 @@ import br.furb.endpoints.estadia.EstadiaPojo;
 import br.furb.endpoints.usuario.UsuarioPojo;
 import br.furb.model.UsuarioEntity;
 import br.furb.persistence.EstadiaDao;
-import br.furb.persistence.PagamentoDao;
+import br.furb.persistence.FormaPagamentoDao;
 import br.furb.persistence.UsuarioDao;
 
 /**

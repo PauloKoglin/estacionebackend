@@ -190,7 +190,7 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 		}	
 		
 		
-		PagamentoDao pagamento = new PagamentoDao();
+		FormaPagamentoDao pagamento = new FormaPagamentoDao();
 		String idPagamento = pagamento.realizarPagamento(estadia);
 		System.out.println("Pagou - ID: " + idPagamento);
 						

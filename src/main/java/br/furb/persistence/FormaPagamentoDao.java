@@ -5,6 +5,11 @@ package br.furb.persistence;
 
 import java.io.IOException;
 import java.text.NumberFormat;
+import java.util.List;
+
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import antlr.Parser;
 import br.furb.cielopayment.Merchant;
@@ -16,13 +21,17 @@ import br.furb.cielopayment.ecommerce.Sale;
 import br.furb.cielopayment.request.CieloError;
 import br.furb.cielopayment.request.CieloRequestException;
 import br.furb.endpoints.estadia.EstadiaPojo;
+import br.furb.endpoints.pagamento.FormaPagamentoPojo;
 import br.furb.endpoints.usuario.UsuarioPojo;
+import br.furb.model.FormaPagamentoEntity;
+import br.furb.model.UsuarioEntity;
+
 
 /**
  * @author PauloArnoldo
  *
  */
-public class PagamentoDao {
+public class FormaPagamentoDao  extends BaseDao<FormaPagamentoEntity, FormaPagamentoPojo> {
 	private final String MERCHANT_ID = "1198ba2c-3097-41bd-9205-44d8cc7488d2";
 	private final String MERCHANT_KEY = "WMZZZOTCFFWYQYADNHSUBPFQJBOWOLDNJIFRWTZP";
 	
@@ -74,5 +83,74 @@ public class PagamentoDao {
 			e.printStackTrace();
 		}
 		return sale.getPayment().getPaymentId();
+	}
+	
+	public String salvarCartaoCredito(FormaPagamentoPojo formaPagamentoPojo) {
+		DetachedCriteria criteriaUsuario = DetachedCriteria.forClass(UsuarioEntity.class);  
+		criteriaUsuario.add(Restrictions.eq("login", SecurityContextHolder.getContext().getAuthentication().getName()));
+		List<UsuarioEntity> usuarioList = (List<UsuarioEntity>) hibernateTemplate.findByCriteria(criteriaUsuario);
+		
+		UsuarioEntity usuario = null;
+		if (!usuarioList.isEmpty()) {
+			usuario = usuarioList.get(0);
+		} 
+		
+		if (usuario.getFormaPagamento() == null)
+			formaPagamentoPojo = save(formaPagamentoPojo, null);
+		else
+			formaPagamentoPojo = save(formaPagamentoPojo, formaPagamentoPojo.getIdFormaPagamento());
+				
+		//usuario.setFormaPagamento(formaPagamento);
+		return "";
+	}
+
+	@Override
+	public Class<FormaPagamentoEntity> getEntityClass() {
+		return FormaPagamentoEntity.class;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	protected FormaPagamentoEntity pojoToEntity(FormaPagamentoPojo pojo, FormaPagamentoEntity entity) {
+		entity.setId(pojo.getIdFormaPagamento());
+		entity.setNomeCartao(pojo.getNomeCartao());
+		entity.setNumero(pojo.getNumero());
+		entity.setCodigoSeguranca(pojo.getCodigoSeguranca());
+		entity.setBandeira(pojo.getBandeira());
+		entity.setValidade(pojo.getValidade());
+		
+		/*DetachedCriteria criteriaUsuario = DetachedCriteria.forClass(UsuarioEntity.class);  
+		criteriaUsuario.add(Restrictions.eq("login", SecurityContextHolder.getContext().getAuthentication().getName()));
+		List<UsuarioEntity> usuarioList = (List<UsuarioEntity>) hibernateTemplate.findByCriteria(criteriaUsuario);
+		
+		if (!usuarioList.isEmpty()) {
+			entity.setUsuario(usuarioList.get(0));
+		} */
+		
+		return entity;
+	}
+
+	@Override
+	protected FormaPagamentoPojo entityToPojo(FormaPagamentoEntity entity, FormaPagamentoPojo pojo) {
+		pojo.setIdFormaPagamento(entity.getIdFormaPagamento());
+		pojo.setNumero(entity.getNumero());
+		pojo.setNomeCartao(entity.getNomeCartao());
+		pojo.setValidade(entity.getValidade());
+		pojo.setBandeira(entity.getBandeira());
+		pojo.setCodigoSeguranca(entity.getCodigoSeguranca());
+		
+		return pojo;
+	}
+
+	@Override
+	protected FormaPagamentoEntity newEntity(Object... adicionais) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected FormaPagamentoPojo newPojo(Object... adicionais) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -1,5 +1,7 @@
 package br.furb.endpoints.usuario;
 
+import br.furb.model.FormaPagamentoEntity;
+
 public class UsuarioPojo {
 
 	private Long idUsuario;
@@ -9,8 +11,7 @@ public class UsuarioPojo {
 	private String senha;
 	private boolean TermosPoliticas;
 	private String tipoUsuario;
-
-	
+	private FormaPagamentoEntity formaPagamento;
 	
 	public Long getIdUsuario() {
 		return idUsuario;
@@ -69,5 +70,14 @@ public class UsuarioPojo {
 		this.tipoUsuario = tipoUsuario;
 	}
 
+	public FormaPagamentoEntity getFormaPagamento() {
+		return formaPagamento;
+	}
+
+	public void setFormaPagamento(FormaPagamentoEntity formaPagamento) {
+		this.formaPagamento = formaPagamento;
+	}
+
+	
 	
 }
