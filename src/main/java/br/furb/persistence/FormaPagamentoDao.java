@@ -10,6 +10,7 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.furb.cielopayment.Merchant;
 import br.furb.cielopayment.ecommerce.CieloEcommerce;
@@ -85,6 +86,7 @@ public class FormaPagamentoDao  extends BaseDao<FormaPagamentoEntity, FormaPagam
 	}
 	
 	@SuppressWarnings("unchecked")
+	@Transactional(rollbackFor = Throwable.class)
 	public FormaPagamentoPojo inserirFormaPagamento(FormaPagamentoPojo formaPagamentoPojo) {
 		DetachedCriteria criteriaUsuario = DetachedCriteria.forClass(UsuarioEntity.class);  
 		criteriaUsuario.add(Restrictions.eq("login", SecurityContextHolder.getContext().getAuthentication().getName()));
@@ -98,10 +100,6 @@ public class FormaPagamentoDao  extends BaseDao<FormaPagamentoEntity, FormaPagam
 		formaPagamentoPojo.setUsuario(usuario);
 						
 		return save(formaPagamentoPojo, null);
-	}
-	
-	public FormaPagamentoPojo alterarFormaPagamento(FormaPagamentoPojo formaPagamentoPojo) {			
-		return save(formaPagamentoPojo, formaPagamentoPojo.getIdFormaPagamento());
 	}
 	
 	@SuppressWarnings("unchecked")
