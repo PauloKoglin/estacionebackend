@@ -19,13 +19,13 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = FormaPagamentoEntity.TABLE_NAME)
-@SequenceGenerator(name="formaPagemento_sequence", sequenceName="formaPagamento_id", initialValue=1, allocationSize=1)
+@SequenceGenerator(name="pagemento_sequence", sequenceName="pagamento_id", initialValue=1, allocationSize=1)
 public class FormaPagamentoEntity implements BaseEntity {
 	
 	public static final String TABLE_NAME = "formaPagamento";
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="formaPagemento_sequence")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="pagemento_sequence")
 	@Column(name = "id_formaPagamento")
 	private Long idFormaPagamento;	
 	
