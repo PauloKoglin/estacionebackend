@@ -49,12 +49,14 @@ public class FormaPagamentoDao  extends BaseDao<FormaPagamentoEntity, FormaPagam
 		// Crie uma instância de Payment informando o valor do pagamento
 		int valor = new Integer( Double.toString(Math.round(estadia.getPreco() * 100)).replace(".0", ""));
 		Payment payment = sale.payment(valor);
-
+		
+		List<FormaPagamentoPojo> list = obterFormaPagamentoUsario();
+		FormaPagamentoPojo cartao = list.get(0);
 		// Crie  uma instância de Credit Card utilizando os dados de teste
 		// esses dados estão disponíveis no manual de integração
-		payment.creditCard("123", "Visa").setExpirationDate("12/2018")
-		                                 .setCardNumber("0000000000000001")
-		                                 .setHolder("Fulano de Tal");
+		payment.creditCard(cartao.getCodigoSeguranca(), cartao.getBandeira()).setExpirationDate(cartao.getValidade())
+		                                 .setCardNumber(cartao.getNumero().toString())
+		                                 .setHolder(cartao.getNomeCartao());
 
 		sale.setPayment(payment);
 		
