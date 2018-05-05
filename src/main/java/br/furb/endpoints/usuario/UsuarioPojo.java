@@ -11,7 +11,6 @@ public class UsuarioPojo {
 	private String senha;
 	private boolean TermosPoliticas;
 	private String tipoUsuario;
-	private FormaPagamentoEntity formaPagamento;
 	
 	public Long getIdUsuario() {
 		return idUsuario;
@@ -68,16 +67,6 @@ public class UsuarioPojo {
 
 	public void setTipoUsuario(String tipoUsuario) {
 		this.tipoUsuario = tipoUsuario;
-	}
-
-	public FormaPagamentoEntity getFormaPagamento() {
-		return formaPagamento;
-	}
-
-	public void setFormaPagamento(FormaPagamentoEntity formaPagamento) {
-		this.formaPagamento = formaPagamento;
-	}
-
-	
+	}	
 	
 }
