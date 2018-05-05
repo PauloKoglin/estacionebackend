@@ -16,9 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.furb.endpoints.estadia.EstadiaPojo;
-import br.furb.endpoints.usuario.UsuarioPojo;
-import br.furb.persistence.EstadiaDao;
 import br.furb.persistence.FormaPagamentoDao;
 
 /**
@@ -30,15 +27,19 @@ import br.furb.persistence.FormaPagamentoDao;
 public class FormaPagamentoController {
 	@Autowired @Lazy private FormaPagamentoDao formaPagamentoDao;
 
-	/*@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
-	public ResponseEntity<List<FormaPagamentoPojo>> getFormaPagamento() {
-		return new ResponseEntity<>(formaPagamentoDao.findAll(), HttpStatus.OK);
-	}*/
+	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+	public ResponseEntity<List<FormaPagamentoPojo>> getFormaPagamentoUsuario() {
+		return new ResponseEntity<>(formaPagamentoDao.obterFormaPagamentoUsario(), HttpStatus.OK);
+	}
 	
 	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
-	public ResponseEntity<String> salvarFormaPagamento(@RequestBody FormaPagamentoPojo formaPagamento) {
-		String retorno = formaPagamentoDao.salvarCartaoCredito(formaPagamento);		
-		return new ResponseEntity<>("retorno:"+retorno, HttpStatus.OK);
+	public ResponseEntity<FormaPagamentoPojo> inserirFormaPagamento(@RequestBody FormaPagamentoPojo formaPagamento) {	
+		return new ResponseEntity<FormaPagamentoPojo>(formaPagamentoDao.inserirFormaPagamento(formaPagamento), HttpStatus.OK);
+	}
+	
+	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST, value = {"/{idFormaPagamento}"})
+	public ResponseEntity<FormaPagamentoPojo> alterarFormaPagamento(@RequestBody FormaPagamentoPojo formaPagamento, @PathVariable("idFormaPagamento") Long idFormaPagamento) {	
+		return new ResponseEntity<FormaPagamentoPojo>(formaPagamentoDao.save(formaPagamento, idFormaPagamento), HttpStatus.OK);
 	}
 	
 }

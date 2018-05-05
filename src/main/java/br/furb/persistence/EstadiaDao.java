@@ -58,6 +58,7 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 		entity.setUsuario(usuario);
 		entity.setDataEntrada(pojo.getDataEntrada());
 		entity.setDataSaida(pojo.getDataSaida());
+		entity.setIdPagamento(pojo.getIdPagamento());
 		
 		return entity;
 	}
@@ -70,6 +71,7 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 		pojo.setPreco(entity.getPreco());		
 		pojo.setDataEntrada(entity.getDataEntrada());
 		pojo.setDataSaida(entity.getDataSaida());
+		pojo.setIdPagamento(entity.getIdPagamento());
 		
 		return pojo;
 	}
@@ -183,16 +185,17 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 		else {
 			long horas = tempo;
 			double resto = Math.floorMod(horas, 60);
+			double indiceCalc = (horas / 60) - resto;
 			if (resto == 0)
-				estadia.setPreco(estacionamento.getPreco() * horas);
+				estadia.setPreco(estacionamento.getPreco() * indiceCalc);
 			else
-				estadia.setPreco(estacionamento.getPreco() * horas + estacionamento.getPreco());			
-		}	
-		
+				estadia.setPreco((estacionamento.getPreco() * indiceCalc) + estacionamento.getPreco());
+		}
 		
 		FormaPagamentoDao pagamento = new FormaPagamentoDao();
 		String idPagamento = pagamento.realizarPagamento(estadia);
 		System.out.println("Pagou - ID: " + idPagamento);
+		estadia.setIdPagamento(idPagamento);
 						
 		return save(estadia, estadia.getIdEstadia());
 	}

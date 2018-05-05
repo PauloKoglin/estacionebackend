@@ -19,6 +19,7 @@ public class EstadiaPojo {
 	private Date dataEntrada;
 	private Date dataSaida;
 	private double preco;
+	private String idPagamento;
 	
 	
 	public Long getIdEstadia() {
@@ -56,6 +57,12 @@ public class EstadiaPojo {
 	}
 	public void setPreco(double preco) {
 		this.preco = preco;
+	}
+	public String getIdPagamento() {
+		return idPagamento;
+	}
+	public void setIdPagamento(String idPagamento) {
+		this.idPagamento = idPagamento;
 	}
 	
 	

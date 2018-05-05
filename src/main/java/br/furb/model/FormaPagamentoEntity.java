@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -23,7 +25,7 @@ public class FormaPagamentoEntity implements BaseEntity {
 	public static final String TABLE_NAME = "formaPagamento";
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="estacionamento_sequence")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="formaPagemento_sequence")
 	@Column(name = "id_formaPagamento")
 	private Long idFormaPagamento;	
 	
@@ -42,6 +44,10 @@ public class FormaPagamentoEntity implements BaseEntity {
 	@Column(name = "ds_bandeira")
 	private String bandeira;
 
+	@ManyToOne(targetEntity = UsuarioEntity.class)//, cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "usuario_id")
+	private UsuarioEntity usuario;
+	
 	public Long getIdFormaPagamento() {
 		return idFormaPagamento;
 	}
@@ -99,6 +105,12 @@ public class FormaPagamentoEntity implements BaseEntity {
 	public void setId(Long id) {
 		this.idFormaPagamento = id;		
 	}
-	
-	
+
+	public UsuarioEntity getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(UsuarioEntity usuario) {
+		this.usuario = usuario;
+	}	
 }

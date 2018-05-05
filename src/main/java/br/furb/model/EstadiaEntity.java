@@ -54,6 +54,10 @@ public class EstadiaEntity implements BaseEntity {
 	
 	@Column(name="vl_preco", length=10, precision=2, nullable=false)
 	private double preco;
+	
+	@Column(name="id_pagamento")
+	private String idPagamento;
+	
 
 	@Override
 	public Long getId() {
@@ -111,5 +115,15 @@ public class EstadiaEntity implements BaseEntity {
 
 	public void setPreco(double preco) {
 		this.preco = preco;
+	}
+
+	public String getIdPagamento() {
+		return idPagamento;
+	}
+
+	public void setIdPagamento(String idPagamento) {
+		this.idPagamento = idPagamento;
 	}	
+	
+	
 }

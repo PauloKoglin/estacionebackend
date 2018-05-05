@@ -23,6 +23,7 @@ import br.furb.cielopayment.request.CieloRequestException;
 import br.furb.endpoints.estadia.EstadiaPojo;
 import br.furb.endpoints.pagamento.FormaPagamentoPojo;
 import br.furb.endpoints.usuario.UsuarioPojo;
+import br.furb.model.EstadiaEntity;
 import br.furb.model.FormaPagamentoEntity;
 import br.furb.model.UsuarioEntity;
 
@@ -48,7 +49,7 @@ public class FormaPagamentoDao  extends BaseDao<FormaPagamentoEntity, FormaPagam
 
 		// Crie uma instância de Payment informando o valor do pagamento
 		int valor = new Integer( Double.toString(Math.round(estadia.getPreco() * 100)).replace(".0", ""));
-		Payment payment = sale.payment(valor);		
+		Payment payment = sale.payment(valor);
 
 		// Crie  uma instância de Credit Card utilizando os dados de teste
 		// esses dados estão disponíveis no manual de integração
@@ -85,7 +86,7 @@ public class FormaPagamentoDao  extends BaseDao<FormaPagamentoEntity, FormaPagam
 		return sale.getPayment().getPaymentId();
 	}
 	
-	public String salvarCartaoCredito(FormaPagamentoPojo formaPagamentoPojo) {
+	public FormaPagamentoPojo inserirFormaPagamento(FormaPagamentoPojo formaPagamentoPojo) {
 		DetachedCriteria criteriaUsuario = DetachedCriteria.forClass(UsuarioEntity.class);  
 		criteriaUsuario.add(Restrictions.eq("login", SecurityContextHolder.getContext().getAuthentication().getName()));
 		List<UsuarioEntity> usuarioList = (List<UsuarioEntity>) hibernateTemplate.findByCriteria(criteriaUsuario);
@@ -93,15 +94,35 @@ public class FormaPagamentoDao  extends BaseDao<FormaPagamentoEntity, FormaPagam
 		UsuarioEntity usuario = null;
 		if (!usuarioList.isEmpty()) {
 			usuario = usuarioList.get(0);
-		} 
+		}
 		
-		if (usuario.getFormaPagamento() == null)
-			formaPagamentoPojo = save(formaPagamentoPojo, null);
-		else
-			formaPagamentoPojo = save(formaPagamentoPojo, formaPagamentoPojo.getIdFormaPagamento());
+		formaPagamentoPojo.setUsuario(usuario);
+						
+		return save(formaPagamentoPojo, null);
+	}
+	
+	public FormaPagamentoPojo alterarFormaPagamento(FormaPagamentoPojo formaPagamentoPojo) {			
+		return save(formaPagamentoPojo, formaPagamentoPojo.getIdFormaPagamento());
+	}
+	
+	public List<FormaPagamentoPojo> obterFormaPagamentoUsario() {
+		UsuarioEntity usuario = null; 
+		DetachedCriteria criteriaUsuario = DetachedCriteria.forClass(UsuarioEntity.class);  
+		criteriaUsuario.add(Restrictions.eq("login", SecurityContextHolder.getContext().getAuthentication().getName()));
+		List<UsuarioEntity> usuarioList = (List<UsuarioEntity>) hibernateTemplate.findByCriteria(criteriaUsuario);
+		
+		if (!usuarioList.isEmpty()) {
+			usuario = usuarioList.get(0);
+			System.out.println("Encontrou usuário. " + usuario.toString());
+		} 	
+		
+		DetachedCriteria criteria = DetachedCriteria.forClass(FormaPagamentoPojo.class);  
+		criteria.createAlias("usuario", "usu");
+		criteria.add(Restrictions.eq("usu.id", usuario.getId()));		
+		List<FormaPagamentoPojo> list = (List<FormaPagamentoPojo>) hibernateTemplate.findByCriteria(criteria);
+		//List<EstadiaPojo> list = findAll(criteria);
 				
-		//usuario.setFormaPagamento(formaPagamento);
-		return "";
+		return list;		
 	}
 
 	@Override
@@ -119,13 +140,14 @@ public class FormaPagamentoDao  extends BaseDao<FormaPagamentoEntity, FormaPagam
 		entity.setBandeira(pojo.getBandeira());
 		entity.setValidade(pojo.getValidade());
 		
-		/*DetachedCriteria criteriaUsuario = DetachedCriteria.forClass(UsuarioEntity.class);  
+		
+		DetachedCriteria criteriaUsuario = DetachedCriteria.forClass(UsuarioEntity.class);  
 		criteriaUsuario.add(Restrictions.eq("login", SecurityContextHolder.getContext().getAuthentication().getName()));
 		List<UsuarioEntity> usuarioList = (List<UsuarioEntity>) hibernateTemplate.findByCriteria(criteriaUsuario);
 		
 		if (!usuarioList.isEmpty()) {
 			entity.setUsuario(usuarioList.get(0));
-		} */
+		} 
 		
 		return entity;
 	}
@@ -138,6 +160,7 @@ public class FormaPagamentoDao  extends BaseDao<FormaPagamentoEntity, FormaPagam
 		pojo.setValidade(entity.getValidade());
 		pojo.setBandeira(entity.getBandeira());
 		pojo.setCodigoSeguranca(entity.getCodigoSeguranca());
+		pojo.setUsuario(entity.getUsuario());
 		
 		return pojo;
 	}
@@ -145,12 +168,12 @@ public class FormaPagamentoDao  extends BaseDao<FormaPagamentoEntity, FormaPagam
 	@Override
 	protected FormaPagamentoEntity newEntity(Object... adicionais) {
 		// TODO Auto-generated method stub
-		return null;
+		return new FormaPagamentoEntity();
 	}
 
 	@Override
 	protected FormaPagamentoPojo newPojo(Object... adicionais) {
 		// TODO Auto-generated method stub
-		return null;
+		return new FormaPagamentoPojo();
 	}
 }
