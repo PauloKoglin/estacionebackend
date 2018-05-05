@@ -1,6 +1,5 @@
 package br.furb.endpoints.usuario;
 
-import br.furb.model.FormaPagamentoEntity;
 
 public class UsuarioPojo {
 

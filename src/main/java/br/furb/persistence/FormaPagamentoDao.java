@@ -4,17 +4,15 @@
 package br.furb.persistence;
 
 import java.io.IOException;
-import java.text.NumberFormat;
 import java.util.List;
 
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Repository;
 
-import antlr.Parser;
 import br.furb.cielopayment.Merchant;
 import br.furb.cielopayment.ecommerce.CieloEcommerce;
-import br.furb.cielopayment.ecommerce.Customer;
 import br.furb.cielopayment.ecommerce.Environment;
 import br.furb.cielopayment.ecommerce.Payment;
 import br.furb.cielopayment.ecommerce.Sale;
@@ -22,8 +20,6 @@ import br.furb.cielopayment.request.CieloError;
 import br.furb.cielopayment.request.CieloRequestException;
 import br.furb.endpoints.estadia.EstadiaPojo;
 import br.furb.endpoints.pagamento.FormaPagamentoPojo;
-import br.furb.endpoints.usuario.UsuarioPojo;
-import br.furb.model.EstadiaEntity;
 import br.furb.model.FormaPagamentoEntity;
 import br.furb.model.UsuarioEntity;
 
@@ -32,6 +28,8 @@ import br.furb.model.UsuarioEntity;
  * @author PauloArnoldo
  *
  */
+
+@Repository
 public class FormaPagamentoDao  extends BaseDao<FormaPagamentoEntity, FormaPagamentoPojo> {
 	private final String MERCHANT_ID = "1198ba2c-3097-41bd-9205-44d8cc7488d2";
 	private final String MERCHANT_KEY = "WMZZZOTCFFWYQYADNHSUBPFQJBOWOLDNJIFRWTZP";
@@ -86,6 +84,7 @@ public class FormaPagamentoDao  extends BaseDao<FormaPagamentoEntity, FormaPagam
 		return sale.getPayment().getPaymentId();
 	}
 	
+	@SuppressWarnings("unchecked")
 	public FormaPagamentoPojo inserirFormaPagamento(FormaPagamentoPojo formaPagamentoPojo) {
 		DetachedCriteria criteriaUsuario = DetachedCriteria.forClass(UsuarioEntity.class);  
 		criteriaUsuario.add(Restrictions.eq("login", SecurityContextHolder.getContext().getAuthentication().getName()));
@@ -105,6 +104,7 @@ public class FormaPagamentoDao  extends BaseDao<FormaPagamentoEntity, FormaPagam
 		return save(formaPagamentoPojo, formaPagamentoPojo.getIdFormaPagamento());
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<FormaPagamentoPojo> obterFormaPagamentoUsario() {
 		UsuarioEntity usuario = null; 
 		DetachedCriteria criteriaUsuario = DetachedCriteria.forClass(UsuarioEntity.class);  
