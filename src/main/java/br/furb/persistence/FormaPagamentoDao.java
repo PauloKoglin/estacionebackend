@@ -85,22 +85,6 @@ public class FormaPagamentoDao  extends BaseDao<FormaPagamentoEntity, FormaPagam
 		return sale.getPayment().getPaymentId();
 	}
 	
-	@SuppressWarnings("unchecked")
-	@Transactional(rollbackFor = Throwable.class)
-	public FormaPagamentoPojo inserirFormaPagamento(FormaPagamentoPojo formaPagamentoPojo) {
-		DetachedCriteria criteriaUsuario = DetachedCriteria.forClass(UsuarioEntity.class);  
-		criteriaUsuario.add(Restrictions.eq("login", SecurityContextHolder.getContext().getAuthentication().getName()));
-		List<UsuarioEntity> usuarioList = (List<UsuarioEntity>) hibernateTemplate.findByCriteria(criteriaUsuario);
-		
-		UsuarioEntity usuario = null;
-		if (!usuarioList.isEmpty()) {
-			usuario = usuarioList.get(0);
-		}
-		
-		formaPagamentoPojo.setUsuario(usuario);
-						
-		return save(formaPagamentoPojo, null);
-	}
 	
 	@SuppressWarnings("unchecked")
 	public List<FormaPagamentoPojo> obterFormaPagamentoUsario() {
@@ -136,8 +120,7 @@ public class FormaPagamentoDao  extends BaseDao<FormaPagamentoEntity, FormaPagam
 		entity.setNumero(pojo.getNumero());
 		entity.setCodigoSeguranca(pojo.getCodigoSeguranca());
 		entity.setBandeira(pojo.getBandeira());
-		entity.setValidade(pojo.getValidade());
-		
+		entity.setValidade(pojo.getValidade());		
 		
 		DetachedCriteria criteriaUsuario = DetachedCriteria.forClass(UsuarioEntity.class);  
 		criteriaUsuario.add(Restrictions.eq("login", SecurityContextHolder.getContext().getAuthentication().getName()));
