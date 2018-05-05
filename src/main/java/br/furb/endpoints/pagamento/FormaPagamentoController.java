@@ -34,12 +34,12 @@ public class FormaPagamentoController {
 	
 	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
 	public ResponseEntity<FormaPagamentoPojo> inserirFormaPagamento(@RequestBody FormaPagamentoPojo formaPagamento) {	
-		return new ResponseEntity<FormaPagamentoPojo>(formaPagamentoDao.save(formaPagamento, null), HttpStatus.OK);
+		return new ResponseEntity<>(formaPagamentoDao.save(formaPagamento, null), HttpStatus.OK);
 	}
 	
 	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST, value = {"/{idFormaPagamento}"})
 	public ResponseEntity<FormaPagamentoPojo> alterarFormaPagamento(@RequestBody FormaPagamentoPojo formaPagamento, @PathVariable("idFormaPagamento") Long idFormaPagamento) {	
-		return new ResponseEntity<FormaPagamentoPojo>(formaPagamentoDao.save(formaPagamento, idFormaPagamento), HttpStatus.OK);
+		return new ResponseEntity<>(formaPagamentoDao.save(formaPagamento, idFormaPagamento), HttpStatus.OK);
 	}
 	
 }
