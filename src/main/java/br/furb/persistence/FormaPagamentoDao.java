@@ -100,7 +100,7 @@ public class FormaPagamentoDao  extends BaseDao<FormaPagamentoEntity, FormaPagam
 			System.out.println("Encontrou usuário. " + usuario.toString());
 		} 	
 		
-		DetachedCriteria criteria = DetachedCriteria.forClass(FormaPagamentoPojo.class);  
+		DetachedCriteria criteria = DetachedCriteria.forClass(FormaPagamentoEntity.class);  
 		criteria.createAlias("usuario", "usu");
 		criteria.add(Restrictions.eq("usu.id", usuario.getId()));		
 		List<FormaPagamentoPojo> list = (List<FormaPagamentoPojo>) hibernateTemplate.findByCriteria(criteria);
