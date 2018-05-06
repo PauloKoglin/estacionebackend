@@ -250,8 +250,8 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 		criteria.createAlias("usuario", "usu");
 		criteria.add(Restrictions.eq("usu.id", usuario.getId()));		
 		//List<FormaPagamentoPojo> list = (List<FormaPagamentoPojo>) hibernateTemplate.findByCriteria(criteria);
-		List<FormaPagamentoPojo> list = (List<FormaPagamentoPojo>) hibernateTemplate.findByCriteria(criteriaUsuario);
-		FormaPagamentoPojo cartao = list.get(0);
+		List<FormaPagamentoEntity> list = (List<FormaPagamentoEntity>) hibernateTemplate.findByCriteria(criteria);
+		FormaPagamentoEntity cartao = list.get(0);
 		// Crie  uma instância de Credit Card utilizando os dados de teste
 		// esses dados estão disponíveis no manual de integração
 		payment.creditCard(cartao.getCodigoSeguranca(), cartao.getBandeira()).setExpirationDate(cartao.getValidade())
