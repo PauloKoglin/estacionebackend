@@ -50,7 +50,7 @@ public class FormaPagamentoDao  extends BaseDao<FormaPagamentoEntity, FormaPagam
 		int valor = new Integer( Double.toString(Math.round(estadia.getPreco() * 100)).replace(".0", ""));
 		Payment payment = sale.payment(valor);
 		
-		List<FormaPagamentoPojo> list = obterFormaPagamentoUsario();
+		List<FormaPagamentoPojo> list = obterFormaPagamentoUsario(estadia.getIdUsuario());
 		FormaPagamentoPojo cartao = list.get(0);
 		// Crie  uma instância de Credit Card utilizando os dados de teste
 		// esses dados estão disponíveis no manual de integração
@@ -89,20 +89,23 @@ public class FormaPagamentoDao  extends BaseDao<FormaPagamentoEntity, FormaPagam
 	
 	
 	@SuppressWarnings("unchecked")
-	public List<FormaPagamentoPojo> obterFormaPagamentoUsario() {
-		UsuarioEntity usuario = null; 
-		DetachedCriteria criteriaUsuario = DetachedCriteria.forClass(UsuarioEntity.class);  
-		criteriaUsuario.add(Restrictions.eq("login", SecurityContextHolder.getContext().getAuthentication().getName()));
-		List<UsuarioEntity> usuarioList = (List<UsuarioEntity>) hibernateTemplate.findByCriteria(criteriaUsuario);
-		
-		if (!usuarioList.isEmpty()) {
-			usuario = usuarioList.get(0);
-			System.out.println("Encontrou usuário. " + usuario.toString());
-		} 	
+	public List<FormaPagamentoPojo> obterFormaPagamentoUsario(Long idUsuario) {
+		if (idUsuario == null) {
+			UsuarioEntity usuario = null; 
+			DetachedCriteria criteriaUsuario = DetachedCriteria.forClass(UsuarioEntity.class);  
+			criteriaUsuario.add(Restrictions.eq("login", SecurityContextHolder.getContext().getAuthentication().getName()));
+			List<UsuarioEntity> usuarioList = (List<UsuarioEntity>) hibernateTemplate.findByCriteria(criteriaUsuario);
+			
+			if (!usuarioList.isEmpty()) {
+				usuario = usuarioList.get(0);
+				idUsuario = usuario.getId();
+				System.out.println("Encontrou usuário. " + usuario.toString());
+			} 	
+		}
 		
 		DetachedCriteria criteria = DetachedCriteria.forClass(FormaPagamentoEntity.class);  
 		criteria.createAlias("usuario", "usu");
-		criteria.add(Restrictions.eq("usu.id", usuario.getId()));		
+		criteria.add(Restrictions.eq("usu.id", idUsuario));		
 		//List<FormaPagamentoPojo> list = (List<FormaPagamentoPojo>) hibernateTemplate.findByCriteria(criteria);
 		List<FormaPagamentoPojo> list = findAll(criteria);
 				

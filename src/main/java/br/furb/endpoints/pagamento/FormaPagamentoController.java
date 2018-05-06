@@ -29,7 +29,7 @@ public class FormaPagamentoController {
 
 	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
 	public ResponseEntity<List<FormaPagamentoPojo>> getFormaPagamentoUsuario() {
-		return new ResponseEntity<>(formaPagamentoDao.obterFormaPagamentoUsario(), HttpStatus.OK);
+		return new ResponseEntity<>(formaPagamentoDao.obterFormaPagamentoUsario(null), HttpStatus.OK);
 	}
 	
 	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
