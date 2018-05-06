@@ -103,8 +103,8 @@ public class FormaPagamentoDao  extends BaseDao<FormaPagamentoEntity, FormaPagam
 		DetachedCriteria criteria = DetachedCriteria.forClass(FormaPagamentoEntity.class);  
 		criteria.createAlias("usuario", "usu");
 		criteria.add(Restrictions.eq("usu.id", usuario.getId()));		
-		List<FormaPagamentoPojo> list = (List<FormaPagamentoPojo>) hibernateTemplate.findByCriteria(criteria);
-		//List<EstadiaPojo> list = findAll(criteria);
+		//List<FormaPagamentoPojo> list = (List<FormaPagamentoPojo>) hibernateTemplate.findByCriteria(criteria);
+		List<FormaPagamentoPojo> list = findAll(criteria);
 				
 		return list;		
 	}
