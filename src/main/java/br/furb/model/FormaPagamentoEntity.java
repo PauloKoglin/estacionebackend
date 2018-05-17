@@ -30,7 +30,7 @@ public class FormaPagamentoEntity implements BaseEntity {
 	private Long idFormaPagamento;	
 	
 	@Column(name = "nr_cartao", length = 50)
-	private Long numero;
+	private String numero;
 	
 	@Column(name = "nm_cartao", length = 100)
 	private String nomeCartao;
@@ -56,11 +56,11 @@ public class FormaPagamentoEntity implements BaseEntity {
 		this.idFormaPagamento = idFormaPagamento;
 	}
 
-	public Long getNumero() {
+	public String getNumero() {
 		return numero;
 	}
 
-	public void setNumero(Long numero) {
+	public void setNumero(String numero) {
 		this.numero = numero;
 	}
 

@@ -15,7 +15,7 @@ public class FormaPagamentoPojo {
 
 	private Long idFormaPagamento;	
 	private UsuarioEntity usuario;
-	private Long numero;
+	private String numero;
 	private String nomeCartao;
 	private String validade;
 	private String bandeira;
@@ -33,10 +33,10 @@ public class FormaPagamentoPojo {
 	public void setUsuario(UsuarioEntity usuario) {
 		this.usuario = usuario;
 	}
-	public Long getNumero() {
+	public String getNumero() {
 		return numero;
 	}
-	public void setNumero(Long numero) {
+	public void setNumero(String numero) {
 		this.numero = numero;
 	}
 	public String getNomeCartao() {
