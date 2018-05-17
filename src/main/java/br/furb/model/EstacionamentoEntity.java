@@ -40,7 +40,7 @@ public class EstacionamentoEntity implements BaseEntity {
 	@JoinColumn(name = "usuario_id")
 	private UsuarioEntity usuarioProprietario;
 	
-	@Column(name = "nm_estacionamento", length = 1500)
+	@Column(name = "nm_estacionamento", length = 200)
 	private String nome;
 	
 	@Column(name = "vl_longitude")

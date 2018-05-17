@@ -29,19 +29,19 @@ public class FormaPagamentoEntity implements BaseEntity {
 	@Column(name = "id_formapagamento")
 	private Long idFormaPagamento;	
 	
-	@Column(name = "nr_cartao")
+	@Column(name = "nr_cartao", length = 50)
 	private Long numero;
 	
-	@Column(name = "nm_cartao")
+	@Column(name = "nm_cartao", length = 100)
 	private String nomeCartao;
 	
-	@Column(name = "dt_validade")
+	@Column(name = "dt_validade", length = 10)
 	private String validade;
 	
-	@Column(name = "cd_seguranca")
+	@Column(name = "cd_seguranca", length = 3)
 	private String codigoSeguranca;
 	
-	@Column(name = "ds_bandeira")
+	@Column(name = "ds_bandeira", length = 50)
 	private String bandeira;
 
 	@ManyToOne(targetEntity = UsuarioEntity.class)//, cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)

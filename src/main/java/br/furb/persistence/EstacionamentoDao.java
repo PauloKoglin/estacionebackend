@@ -14,7 +14,6 @@ import org.springframework.stereotype.Repository;
 import br.furb.endpoints.estacionamento.EstacionamentoHorariosPojo;
 import br.furb.endpoints.estacionamento.EstacionamentoPojo;
 import br.furb.model.EstacionamentoEntity;
-import br.furb.model.EstacionamentoHorariosEntity;
 import br.furb.model.UsuarioEntity;
 
 /**

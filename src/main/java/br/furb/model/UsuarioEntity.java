@@ -26,19 +26,19 @@ public class UsuarioEntity implements BaseEntity {
 	private Long id;
 
 	@NotNull
-	@Column(name = "ds_login", length = 400)
+	@Column(name = "ds_login", length = 20)
 	private String login;
 	
 	@NotNull
-	@Column(name = "nm_usuario", length = 500)
+	@Column(name = "nm_usuario", length = 100)
 	private String nome;
 
 	@NotNull
-	@Column(name = "ds_senha", length = 400)
+	@Column(name = "ds_senha", length = 20)
 	private String senha;
 
 	@NotNull
-	@Column(name = "ds_email", length = 400)
+	@Column(name = "ds_email", length = 100)
 	private String email;
 	
 	@Column(name = "fl_termos")
