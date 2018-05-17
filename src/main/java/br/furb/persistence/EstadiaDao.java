@@ -187,10 +187,8 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 		Instant fim = dataSaida.toInstant();
 		Duration d = Duration.between(inicio , fim);
 		Long tempo = d.toMinutes();
-		
-		if (tempo <= 60)
-			estadia.setPreco(estacionamento.getPreco());
-		else {
+		estadia.setPreco(estacionamento.getPreco());
+		if (tempo > 60) {
 			long horas = (tempo / 60);
 			double resto = Math.floorMod(tempo, 60);
 			double indiceCalc = horas - resto;
