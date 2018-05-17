@@ -2,6 +2,7 @@ package br.furb.endpoints.estacionamento;
 
 import br.furb.model.UsuarioEntity;
 
+/*spring.jpa.hibernate.ddl-auto=create*/
 
 public class EstacionamentoPojo {
 	
