@@ -191,11 +191,10 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 		if (tempo > 60) {
 			long horas = (tempo / 60);
 			double resto = Math.floorMod(tempo, 60);
-			double indiceCalc = horas - resto;
 			if (resto == 0)
-				estadia.setPreco(estacionamento.getPreco() * indiceCalc);
+				estadia.setPreco(estacionamento.getPreco() * horas);
 			else
-				estadia.setPreco((estacionamento.getPreco() * indiceCalc) + estacionamento.getPreco());
+				estadia.setPreco((estacionamento.getPreco() * horas) + estacionamento.getPreco());
 		}
 		
 		//FormaPagamentoDao pagamento = new FormaPagamentoDao();
