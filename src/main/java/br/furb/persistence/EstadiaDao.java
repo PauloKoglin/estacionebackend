@@ -68,6 +68,7 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 		entity.setUsuario(usuario);
 		entity.setDataEntrada(pojo.getDataEntrada());
 		entity.setDataSaida(pojo.getDataSaida());
+		entity.setPreco(pojo.getPreco());
 		entity.setIdPagamento(pojo.getIdPagamento());
 		
 		return entity;
@@ -166,7 +167,6 @@ public class EstadiaDao extends BaseDao<EstadiaEntity, EstadiaPojo> {
 		criteria.add(Restrictions.eq("usu.id", usuario.getId()));
 		criteria.add(Restrictions.isNull("dataSaida"));
 		criteria.add(Restrictions.isNotNull("dataEntrada"));		
-		//List<EstadiaPojo> list = (List<EstadiaPojo>) hibernateTemplate.findByCriteria(criteria);
 		List<EstadiaPojo> list = findAll(criteria);
 				
 		if (!list.isEmpty()) {

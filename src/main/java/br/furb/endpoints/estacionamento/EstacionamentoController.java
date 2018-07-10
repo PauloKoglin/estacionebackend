@@ -17,14 +17,13 @@ import br.furb.persistence.EstacionamentoDao;
 
 
 @RestController
-@RequestMapping("estacionamento") ///{idUsuario}
+@RequestMapping("estacionamento")
 public class EstacionamentoController {
 
 	@Autowired @Lazy private EstacionamentoDao estacionamentoDao;
 
 	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
 	public ResponseEntity<List<EstacionamentoPojo>> getEstacionamentos() {
-		//List<EstacionamentoPojo> findAll = estacionamentoDao.findAll();
 		return new ResponseEntity<>(estacionamentoDao.findAll(), HttpStatus.OK);
 	}
 
